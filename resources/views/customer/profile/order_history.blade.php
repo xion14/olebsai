@@ -428,9 +428,9 @@
 														</button>
 													---}}
 														<a href="#" class="review-item" data-item-review="${product.review}" data-item-id="${product.product.id}" id="${detail.code}_${product.product.id}" data-item-variant="${product.variant}" data-item-code="${detail.code}" data-item-detail="${detail.code} : ${product.qty} x ${product.product?.name}" onclick="return review(this);">`+lbr+`</a>
-													{{---
-														<a href="#" data-bs-toggle="modal" data-bs-target="#modalDelivery">CLICK</a>
-													---}}
+													
+														
+													
 													</span>
 													
 												</div>

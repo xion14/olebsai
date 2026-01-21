@@ -82,6 +82,7 @@ class CustomerCartController extends Controller
 			$price_type = 'single'; $duration = ''; $index_selected = 0;
 			$product = Product::with(['category', 'seller', 'unit'])->where('id', $request->product_id)->first();
 			$status_check_multi = false;
+			$request->request->set('product_type_id', $product->type_id);
 			if($product->type_id==3) {
 				$subtimes = $product->subtimes ? unserialize($product->subtimes) : [];
 				if(count($subtimes)) {

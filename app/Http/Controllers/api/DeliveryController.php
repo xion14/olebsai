@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\DeliveryTracking;
 use App\Models\Transaction;
+use App\Models\TransactionProduct;
 use App\Models\NotificationUser;
 use Illuminate\Support\Facades\DB;
 
@@ -40,6 +41,8 @@ class DeliveryController extends Controller
 
         try {
             $transaction = Transaction::find($request->transaction_id);
+			$shipping_cost_status = $transaction->shipping_cost ? true : false;
+			
 
             if ($transaction->shipping_status == 'Received') {
                 DB::rollBack();

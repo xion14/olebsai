@@ -13,6 +13,7 @@ class TransactionProduct extends Model
     protected $fillable = [
         'transaction_id',
         'product_id',
+        'cart_product_type_id',
         'variant',
         'seller_price',
         'admin_cost',

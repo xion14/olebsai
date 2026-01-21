@@ -22,6 +22,7 @@ class Transaction extends Model
 		'shipping_name',
         'shipping_description',
         'shipping_etd',
+        'shipping_received',
         'total',
         'status',
         'note',

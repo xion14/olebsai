@@ -314,7 +314,7 @@
 	
 		
 		$('#container').on('click', '.remove-btn', function(e) {
-			e.preventDefault();add-subtime
+			e.preventDefault();
 			$(this).parent('.row-item').remove(); // Find the parent div with class 'row-item' and remove it
 			$('#container').find('input[type="file"]').each(function(index) {
 				$(this).attr('name', 'digitals_'+index);

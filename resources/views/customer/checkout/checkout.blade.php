@@ -1,6 +1,61 @@
 @extends('__layouts.__frontend.main')
 
 @section('body')
+<style>
+/* Styling tabel agar cantik */
+    .table-custom {
+        border-collapse: separate; /* WAJIB untuk border-radius */
+        border-spacing: 0;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+        border-radius: 12px; /* Membuat sudut luar membulat */
+        overflow: hidden; /* Memastikan isi mengikuti kurva */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Bayangan cantik */
+    }
+
+    /* Styling Cell (td) */
+    .table-custom td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+    }
+
+    /* Menghapus border bawah pada baris terakhir */
+    .table-custom tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Warna Selang-Seling (Zebra Stripes) */
+    .table-custom tr:nth-child(even) {
+        background-color: #f9f9f9; /* Warna baris genap */
+    }
+    
+    .table-custom tr:nth-child(odd) {
+        background-color: #ffffff; /* Warna baris ganjil */
+    }
+
+    /* Membuat sudut membulat di pojok atas-kiri dan bawah-kiri */
+    .table-custom tr:first-child td:first-child {
+        border-top-left-radius: 12px;
+    }
+    
+    /* Membuat sudut membulat di pojok atas-kanan dan bawah-kanan */
+    .table-custom tr:first-child td:last-child {
+        border-top-right-radius: 12px;
+    }
+    
+    /* Sudut bawah */
+    .table-custom tr:last-child td:first-child {
+        border-bottom-left-radius: 12px;
+    }
+    
+    .table-custom tr:last-child td:last-child {
+        border-bottom-right-radius: 12px;
+    }
+</style>
     <div class="w-100 mt-3">
         <div class="row px-2 gap-5">
             <div class="col-12 col-lg-7 border border-1 rounded shadow-sm p-4">
@@ -44,7 +99,7 @@
 					<div class="w-100 mt-2">
 						<div id="other-costs">
 							<div class="table-responsive" id="detail-ongkir" style="display:">
-<table class="table table-bordered" id="cost-table">									
+<table class="table table-bordered table-custom" id="cost-table"">									
 <tbody id="cost-shipping"></tbody></table>
 							</div>
 
@@ -57,6 +112,7 @@
 				
 				<div class="w-100 mt-3">
 					<div class="mt-3 d-flex justify-content-center" id="show_shipping">
+						<img src="/images/LoaderIcon.gif" id="loaderIcon" style="display:none" />
 						<button id="show-shipping" class="btn btn-sm btn-success py-1 px-3" style="font-size: 14px; height: 32px;">
 						{{---<i class="fas fa-check"></i>---}} Lihat Ongkir
 						</button>

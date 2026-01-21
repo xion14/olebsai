@@ -206,7 +206,7 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        try {
+        // // // // // try {
             DB::beginTransaction();
             // // // // // $request->validate([
                 // // // // // 'carts' => 'required|array|min:1',
@@ -252,6 +252,7 @@ class CheckoutController extends Controller
 					$cart_ids[] = $cart->id;
 				}
 			}
+			Log::info(print_r($carts->toArray(), true));
 			
 			
 			/// INI NANTI DILAKUKAN SAJA KALAU BARANG BISA DIEDIT UNTUK HARGA DAN TYPE DAN LAIN-LAIN NYA		REZA
@@ -266,12 +267,13 @@ class CheckoutController extends Controller
 					if($count_subtimes_value && $item->price_type=='single' || !$count_subtimes_value && $item->price_type=='multi') $cart_item_status = false;
 					if($item->price_type=='multi') {
 						// // // // // Log::info('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-						// // // // // Log::info($item->product_id);
+						Log::info($item->product_id);
 						// // // // // Log::info($item->cart_price);
+						Log::info($item->stock);
 						Log::info($item->duration);
 						Log::info($item->subtimes);
 						$subtimes = unserialize($item->subtimes);
-						if($item->cart_price != $subtimes[$item->duration]['subprice']) $cart_item_status = false;
+						if($item->cart_price != (isset($subtimes[$item->duration]) ? $subtimes[$item->duration]['subprice'] : 'NO!')) $cart_item_status = false;
 					}
 				}
 				return $cart_item_status;
@@ -463,6 +465,7 @@ class CheckoutController extends Controller
                 TransactionProduct::create([
                     'transaction_id' => $transaction->id,
                     'product_id' => $get_cart->product_id,
+					'cart_product_type_id' => $get_cart->product_type_id,
 					'variant' => $cart->duration_info,
                     'price' => count($variant) ? $cart->cart_price : $get_product->price,
                     'seller_price' => $get_product->seller_price,
@@ -515,13 +518,13 @@ class CheckoutController extends Controller
                 'data' => $transaction,
                 'message' => 'Transaction has been created',
             ], 200);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ], 500);
-        }
+        // // // // // } catch (\Exception $e) {
+            // // // // // DB::rollBack();
+            // // // // // return response()->json([
+                // // // // // 'success' => false,
+                // // // // // 'message' => $e->getMessage(),
+            // // // // // ], 500);
+        // // // // // }
     }
 
     /**

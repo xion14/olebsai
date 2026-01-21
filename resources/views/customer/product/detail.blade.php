@@ -79,7 +79,7 @@
 
                     @if($type_id==3)
                     <section class="flex items-center" style="margin-bottom: 24px; align-items: baseline;">
-                        <h2 class="Dagtcd">Durasi</h2>
+                        @if($product_subs)<h2 class="Dagtcd">Durasi</h2>@endif
                         <div>
                             <div class="flex items-center j7HL5Q">
                                 @if($product_subs)

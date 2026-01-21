@@ -780,7 +780,8 @@
                 sweetAlertWarning("Checkout hanya diperbolehkan untuk produk dari satu penjual.");
                 return;
             }
-			
+			$("#loaderIcon").show();
+			$("#show-shipping").hide();
 			$.ajax({
 				url: "{{ url('check-shipping') }}",
 				type: 'GET',
@@ -800,10 +801,13 @@
 						});
 					}
 					$("#show-shipping").remove();
+					$("#loaderIcon").hide();
 				},
 				error: function(xhr, status, error) {
 					console.error("An error occurred: " + status + " " + error);
 					$('#detail-ongkir').empty().append('<div>Error loading items</div>');
+					$("#show-shipping").remove();
+					$("#loaderIcon").hide();
 				}
 			});
 			showShipping = false;

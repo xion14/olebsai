@@ -447,6 +447,8 @@ class TransactionController extends Controller
             DB::beginTransaction();
 
             $transaction = Transaction::findOrFail($id);
+			$shipping_cost_status = $transaction->shipping_cost ? true : false;
+			
             if ($transaction->status != 5) {
                 DB::rollBack();
                 return response()->json([
@@ -462,13 +464,23 @@ class TransactionController extends Controller
             $transaction->status = 6;
             $transaction->shipping_number = $request->shipping_number;
             $transaction->shipping_attachment = $image_name;
-            $transaction->save();
-            
-            $delivery_tracking = new DeliveryTracking();
-            $delivery_tracking->transaction_id = $transaction->id;
-            $delivery_tracking->status = 'Telah Diserahkan ke Jasa Kirim';
-            $delivery_tracking->note = 'Barang Telah diserahkan ke jasa kirim dengan nomor resi ' . $request->shipping_number;
-            $delivery_tracking->save();
+
+			if(!$shipping_cost_status) {
+				$delivery_tracking = new DeliveryTracking();
+				$delivery_tracking->transaction_id = $transaction->id;
+				$delivery_tracking->status = 'Telah Diserahkan ke Customer';
+				$delivery_tracking->note = 'Barang Telah diserahkan ke Customer ';
+				$delivery_tracking->save();
+				$transaction->shipping_received = 'yes';
+			} else {
+				$delivery_tracking = new DeliveryTracking();
+				$delivery_tracking->transaction_id = $transaction->id;
+				$delivery_tracking->status = 'Telah Diserahkan ke Jasa Kirim';
+				$delivery_tracking->note = 'Barang Telah diserahkan ke jasa kirim dengan nomor resi ' . $request->shipping_number;
+				$delivery_tracking->save();
+			}
+			
+			$transaction->save();
 
             $notif = new NotificationUser;
             $notif->user_id = $transaction->customer->user_id;

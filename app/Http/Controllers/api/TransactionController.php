@@ -198,6 +198,7 @@ class TransactionController extends Controller
                 TransactionProduct::create([
                     'transaction_id' => $transaction->id,
                     'product_id' => $get_cart->product_id,
+					'type_id' => $get_cart->type_id,
                     'price' => $get_product->price,
                     'seller_price' => $get_product->seller_price,
                     'admin_cost' => $get_product->admin_cost,
