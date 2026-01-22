@@ -19,8 +19,45 @@ class DeliveryController extends Controller
     public function index(Request $request)
     {
         if (!$request->transaction_id) return response()->json(['error' => 'Transaction Number is required'], 400);
+		
+		$data = DeliveryTracking::where('transaction_id', $request->transaction_id)->orderBy('id', 'desc')->get();
+		
+		$transaction = Transaction::find($request->transaction_id);
+		if($transaction->status==6 && $transaction->shipping_information && $transaction->shipping_received=='no') {
+			$shipping_information = json_decode($transaction->shipping_information, true);
+			$curl = curl_init();
 
-        $data = DeliveryTracking::where('transaction_id', $request->transaction_id)->orderBy('id', 'desc')->get();
+			$shipping_number = $transaction->shipping_number;
+			$shipping_information_service = $shipping_information['service'];
+			curl_setopt_array($curl, array(
+			  CURLOPT_URL => "https://rajaongkir.komerce.id/api/v1/track/waybill?awb=$shipping_number&courier=$shipping_information_service",
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_HTTPHEADER => array('key: '.env('RAJAONGKIR_API_KEY')),
+			));
+
+			$response = curl_exec($curl);
+			curl_close($curl);
+			if($response['data']['delivered'] == true) {
+				$delivery_tracking = new DeliveryTracking();
+				$delivery_tracking->transaction_id = $transaction->id;
+				$delivery_tracking->status = $response['meta']['status'];
+				$delivery_tracking->note = $response['meta']['message'];
+				$delivery_tracking->save();
+				Transaction::where('id', $transaction->id)->update([
+					'shipping_received' => 'yes',
+				]);
+			} else {
+				if($data->status != $response['meta']['status'] && $data->note != $response['meta']['message']) {
+					$delivery_tracking = new DeliveryTracking();
+					$delivery_tracking->transaction_id = $transaction->id;
+					$delivery_tracking->status = $response['meta']['status'];
+					$delivery_tracking->note = $response['meta']['message'];
+					$delivery_tracking->save();
+				}
+			}
+		}
+
+        
 
         return response()->json([
             'success' => true,

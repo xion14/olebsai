@@ -24,6 +24,18 @@
                                 <label class="form-check-label fw-medium" for="{{ $category->id }}">
                                     {{ $category->name }}
                                 </label>
+                                <ul>
+                                    @foreach ($category->subcat as $subcategory)
+                                        <li style="list-style: none;">
+                                            
+                                            <input class="form-check-input" name="{{ $subcategory->id }}" id="{{$subcategory->id}}" type="checkbox" value="{{ $subcategory->name }}" data-categori-slug="{{ $subcategory->code }}">
+                                            <label class="form-check-label fw-medium" for="{{ $subcategory->id }}">
+                                                {{ $subcategory->name }}
+                                            </label>
+
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endforeach
                     </div>

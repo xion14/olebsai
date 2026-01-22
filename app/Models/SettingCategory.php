@@ -19,4 +19,9 @@ class SettingCategory extends Model
     public function products(){
         return $this->hasMany(Product::class, 'category_id', 'id');
     }
+	
+	public function subcat()
+    {
+        return $this->hasMany('App\Models\SettingSubCategory', 'setting_category_id');
+    }
 }
