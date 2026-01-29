@@ -26,7 +26,9 @@ class Seller extends Model
         'bank_name',
         'bank_account_name',
         'bank_account_number',
-        'bank_code'
+        'bank_code',
+        'oap',
+        'profile_picture'
     ];
 
     public function user(){

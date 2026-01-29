@@ -195,10 +195,10 @@ class ProductController extends Controller
 							$extension = $file->getClientOriginalExtension();
 							$uniqueFilename = $n.'-'.$rand.'_'.$request->name.rand(10,1000).'_' . time() .'_'.(mt_rand(100000, 999999)).'.' . $extension;
 
-							// Simpan file langsung di public/uploads/product/
-							$file->move(public_path('uploads/product'), $uniqueFilename);
+							// Simpan file langsung di public/uploads/digitals/
+							$file->move(public_path('uploads/digitals'), $uniqueFilename);
 							$digital[] = ['name' => $uniqueFilename];
-							Log::info('has File');
+							// // // // // Log::info('has File');
 							// Simpan path ke database atau array validasi
 							// // // // // $validated[$fileField] = $uniqueFilename;
 							$n++;
@@ -377,10 +377,10 @@ class ProductController extends Controller
 				$extension = $file->getClientOriginalExtension();
 				$uniqueFilename = $n.'-'.$rand.'_'.$request->name.rand(10,1000).'_' . time() .'_'.(mt_rand(100000, 999999)).'.' . $extension;
 
-				// Simpan file langsung di public/uploads/product/
-				$file->move(public_path('uploads/product'), $uniqueFilename);
+				// Simpan file langsung di public/uploads/digitals/
+				$file->move(public_path('uploads/digitals'), $uniqueFilename);
 				$digital[] = ['name' => $uniqueFilename];
-				Log::info('has File');
+				// // // // // Log::info('has File');
 				// Simpan path ke database atau array validasi
 				// // // // // $validated[$fileField] = $uniqueFilename;
 				$n++;

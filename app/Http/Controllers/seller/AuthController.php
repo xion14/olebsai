@@ -39,7 +39,9 @@ class AuthController extends Controller
                 'province' => 'required',
                 'city' => 'required',
                 'zip_code' => 'required',
-                'address' => 'required'
+                'address' => 'required', 
+                'oap' => 'required',
+                'profile_picture' => 'required'
             ],
         );
 
@@ -59,6 +61,7 @@ class AuthController extends Controller
             $seller->province = $validated['province'];
             $seller->country = $validated['country'];
             $seller->zip = $validated['zip_code'];
+            $seller->oap = $validated['oap'];
             $seller->save();
             // User
             $user = new User();

@@ -15,11 +15,22 @@ use Symfony\Component\CssSelector\Parser\Shortcut\ElementParser;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordMail;
+use Log;
 
 class SellerController extends Controller
 {   
+
+    public function __construct()
+    {
+        // Log::info(Auth::user());
+    }
+
     public function index(Request $request)
     {
+
+        $admin_priviledge_id = Auth::user()->admin_priviledge;
+		if($admin_priviledge_id==1) return redirect('/admin/setting/contact-admin');
+        
         if ($request->ajax()) {
             $data = Seller::where('status', 4);
             $index = 1;

@@ -53,7 +53,7 @@
                                 </p>
                             </div>
                             <div class="col-12 p-2 px-lg-5 pt-5">
-                                <form id="registerForm">
+                                <form id="registerForm" enctype="multipart/form-data" method="post">
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="name" class="form-label">Nama</label>
@@ -134,6 +134,18 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="oap" class="form-label">OAP(Orang Papua Asli)</label>
+                                            <select id="type_id" name="type_id" class="form-control">
+                                                <option value="">-- Select OAP --</option>
+                                                    <option value="yes">Ya</option>
+                                                    <option value="no">Tidak</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="profile_picture">Profile Picture</label>
+                                            <input type="file" name="profile_picture" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6 position-relative">
                                             <label for="password" class="form-label">Password</label>
@@ -342,7 +354,7 @@
 
             function processForm(name, tax_number, business_number, phone, username, email, password, country,
                 province, city,
-                zip_code, address) {
+                zip_code, address, oap, profile_picture) {
                 return new Promise((resolve, reject) => {
                     let formData = new FormData();
                     formData.append('_token', '{{ csrf_token() }}');
@@ -358,6 +370,8 @@
                     formData.append('city', city);
                     formData.append('zip_code', zip_code);
                     formData.append('address', address);
+                    formData.append('oap', oap);
+                    formData.append('profile_picture', profile_picture);
 
                     sweetAlertLoading();
 
@@ -407,6 +421,8 @@
                 let city = $('#city').val();
                 let zip_code = $('#zip_code').val();
                 let address = $('#address').val();
+                let oap = $('#oap').val();
+                let profile_picture = $('#profile_picture').val();
                 let confirmPassword = $('#passwordConfirm').val();
 
                 if (confirmPassword == "") {
@@ -423,7 +439,7 @@
 
                 processForm(name, tax_number, business_number, phone, username, email, password, country,
                         province,
-                        city, zip_code, address)
+                        city, zip_code, address, oap, profile_picture)
                     .then((response) => {
                         $('.is-invalid').removeClass('is-invalid');
                         $('.invalid-feedback').remove();

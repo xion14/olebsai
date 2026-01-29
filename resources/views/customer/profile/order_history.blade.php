@@ -76,12 +76,18 @@
     </div>
 
 	<div id="frmAdd" style="z-index:4001"><input type="hidden" id="item_id" /><input type="hidden" id="item_code" /><input type="hidden" id="item_variant" /><textarea style="display:block" style="z-index:4002" name="txtmessage" id="txtmessage" cols="55" rows="5"></textarea></div>
+	<div id="frmCom" style="z-index:4001"><input type="hidden" id="item_id_com" /><input type="hidden" id="item_code_com" /><input type="hidden" id="item_variant_com" /><textarea style="display:block" style="z-index:4002" name="txtmessagecom" id="txtmessagecom" cols="55" rows="5"></textarea></div>
 
 @endsection
 
 @section('script-setting')
 	<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{ asset('assets/panel/modules/string.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/panel/modules/datetime.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('assets/panel/modules/variable.min.js') }}"></script>
+
     <script type="text/javascript">
+
 	
 		var add_window = $("#frmAdd").dialog({
 		  title: "My New Dialog Title",
@@ -99,12 +105,36 @@
 		  }
 		});
 		
+		var add_window_com = $("#frmCom").dialog({
+		  title: "My New Dialog Title",
+		  closeText: "",
+		  autoOpen: false,
+		  height: 280,
+		  width: 650,
+		  modal: true,
+		  buttons: {
+			"--Komplain--": addComplain
+		  },
+		  close: function() {
+			$('#exampleModalToggle').css('display', 'block');
+			// // // // // add_window.dialog( "close" );
+		  }
+		});
+		
 		$("#frmAdd").closest('.ui-dialog').css("z-index", 4000);
+		
+		$("#frmCom").closest('.ui-dialog').css("z-index", 4000);
 			
 		function addComment() {
 			$('#exampleModalToggle').css('display', 'block');
 			add_window.dialog( "close" );
 			callCrudAction('add','');
+		}
+		
+		function addComplain() {
+			$('#exampleModalToggle').css('display', 'block');
+			add_window_com.dialog( "close" );
+			callCrudActionCom('add','');
 		}
 		
 		$(".review-item").on("click", function() {
@@ -124,7 +154,54 @@
 			add_window.dialog( "open" );
 		}
 		
+		function complain(element) {
+			// // // // // alert('transaction-item = ' + element.getAttribute('id'));
+			$("#item_id_com").val(element.getAttribute('data-item-idcom'));
+			$("#item_code_com").val(element.getAttribute('data-item-codecom'));
+			$("#item_variant_com").val(element.getAttribute('data-item-variantcom'));
+			// // // // // alert('hey = ' + element.getAttribute('data-item-review'));
+			$("#txtmessagecom").val(element.getAttribute('data-item-reviewcom') != 'null' ? element.getAttribute('data-item-reviewcom') : '');
+			$('#exampleModalToggle').css('display', 'none');
+			add_window_com.dialog( "option", "title", element.getAttribute('data-item-detailcom'));
+			add_window_com.dialog( "open" );
+		}
 		function callCrudAction(action,id) {
+			var comment_var = '#comment-list-box-'+$("#item_code").val() + "_" + $("#item_id").val()+ "_" + ($("#item_variant").val()).replace(/ /g,'');
+			var queryString;
+			//It is better to sanitise user input to avoid XSS attack and SQL injection
+			switch(action) {
+				case "add":
+					queryString = '_token={{ csrf_token() }}&action='+action+'&item_id='+ $("#item_id").val()+'&item_variant='+ $("#item_variant").val()+'&item_code='+ $("#item_code").val()+'&item_review='+ $("#txtmessage").val();
+				break;
+				case "edit":
+					queryString = 'action='+action+'&message_id='+ id + '&txtmessage='+ $("#edit-message").val();
+				break;
+				// // // // // case "delete":
+					// // // // // queryString = 'action='+action+'&message_id='+ id;
+				// // // // // break;
+			}	 
+			$.ajax({
+			headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+			url: "{{ url('submit-review') }}",
+			data:queryString,
+			type: "POST",
+			success:function(data){
+				switch(action) {
+					case "add":
+						$(comment_var).html(data);
+					break;
+				}
+				$("#txtmessage").val('');
+				// // // // // $("#edit-message").val('');
+				// // // // // $("#loaderIcon").hide();
+			},
+			error:function (){}
+			});
+		}
+		
+		function callCrudActionCom(action,id) {
 			var comment_var = '#comment-list-box-'+$("#item_code").val() + "_" + $("#item_id").val()+ "_" + ($("#item_variant").val()).replace(/ /g,'');
 			var queryString;
 			//It is better to sanitise user input to avoid XSS attack and SQL injection
@@ -393,6 +470,7 @@
 							let lbr = detail.status==7 ? 'Review !' : '';
                             let sellerName = items[0].seller?.name ||
                                     `Toko Seller Id ${sellerId}`;
+							
                             
                             return `<div class="w-100 mb-3">
                                                         <button type="button" class="lihat-seller w-100 d-flex flex-row align-items-center gap-2" style="cursor: pointer; background-color: transparent; border: none; outline: none;" data-seller-id="${sellerId}" data-seller-name="${sellerName}" data-username="${items[0].seller?.username}">
@@ -402,6 +480,28 @@
                                                             </span>
                                                         </button>
                                                         ${items.map((product, index) =>{
+															let itemx = '';
+															let links = '';
+															let productLinks = '';
+															let productLinkz = product.product?.digitals ? unserialize(product.product?.digitals) : [];
+															
+															let dataKeys = Object.values(productLinkz);
+															console.log(dataKeys);
+															
+															let newData = dataKeys.map(itemValue => {
+																return itemValue.name;
+															})
+															
+															i = 1;
+															newData.forEach(data => {
+																console.log(data);
+																if(data){
+																	productLinks += `<a href="/uploads/digitals/${data}"  download class="btn btn-outline-success ms-2" target="_blank">Download file ${i}</a>`;
+																	i++;
+																}
+															});
+															
+															
                                                             return `
                                         <div class="w-100 d-flex flex-column gap-2 px-4 mt-2">
 											<div class="row">
@@ -417,27 +517,25 @@
 															<i class="bi bi-whatsapp"></i> 
 															Chat Now
 														</a>
-													</span>
-												</div>
-												<div class="form-group col-md-3">
+													</span><br />
 													<span class="" style="font-size: 14px; line-height: 1.5;">
-													{{---
-														<button id="id${detail.code}_${product.product.id}" type="button" class="btn btn-outline-primary d-flex align-items-center gap-2 review-xitem" data-bs-toggle="modal"
-															data-bs-target="#staticBackdropAddAddress">
-															Review
-														</button>
-													---}}
-														<a href="#" class="review-item" data-item-review="${product.review}" data-item-id="${product.product.id}" id="${detail.code}_${product.product.id}" data-item-variant="${product.variant}" data-item-code="${detail.code}" data-item-detail="${detail.code} : ${product.qty} x ${product.product?.name}" onclick="return review(this);">`+lbr+`</a>
-													
-														
-													
+														${productLinks}
 													</span>
-													
 												</div>
-												<div class="form-group col-md-5">
+												<div class="form-group col-md-2">
+													<span class="" style="font-size: 14px; line-height: 1.5;">
+														<a href="#" class="review-item" data-item-review="${product.review}" data-item-id="${product.product.id}" id="${detail.code}_${product.product.id}" data-item-variant="${product.variant}" data-item-code="${detail.code}" data-item-detail="${detail.code} : ${product.qty} x ${product.product?.name}" onclick="return review(this);">`+lbr+`</a>
+													</span>
+												</div>
+												<div class="form-group col-md-4">
 													<span class="" style="font-size: 14px; line-height: 1.5;" id="comment-list-box-${detail.code}_${product.product.id}_${(product.variant!=null?product.variant:'').replace(/ /g,'')}">
 													<div class="message-content">${product.review==null ? '' : product.review}</div>
 													<div class="message-time">${product.reviewed_at==null ? '' : product.reviewed_at}</div>
+													</span>
+												</div>
+												<div class="form-group col-md-2">
+													<span class="" style="font-size: 14px; line-height: 1.5;">
+														<a href="#" class="complain-item" data-item-reviewCom="${product.complain}" data-item-idCom="${product.product.id}" id="${detail.code}_${product.product.id}_com" data-item-variantCom="${product.variant}" data-item-codeCom="${detail.code}" data-item-detailCom="${detail.code} : ${product.qty} x ${product.product?.name}" onclick="return complain(this);">Komplain ?</a>
 													</span>
 												</div>
 											</div>

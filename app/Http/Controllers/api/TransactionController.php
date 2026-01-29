@@ -397,6 +397,8 @@ class TransactionController extends Controller
                 ], 404);
             }
 			
+			Log::info('$transaction->status =>>> '.$transaction->status);
+			
             if ($transaction->status == 7) {
                 DB::rollBack();
                 return response()->json([

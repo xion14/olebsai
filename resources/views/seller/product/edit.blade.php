@@ -162,7 +162,10 @@
 							<input type="hidden" id="file_digitals_{{$i}}" name="file_digitals[]" value="{{ $digital['name'] }}" />
 							</div>
 							<div class="file_existing form-group col-md-8">
-							<label for="digital_file">File existing </label> <strong>{{ $digital['name'] }}</strong>
+							<label for="digital_file">File existing </label> 
+							<a href="{{ url('/uploads/digitals') }}/{{ $digital['name'] }}" download>
+							  <strong>{{ $digital['name'] }}</strong>
+							</a>
 							</div>
 							@if($i > 0)
 							<button class="remove-btn">Remove</button>

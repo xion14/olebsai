@@ -443,6 +443,7 @@ class TransactionController extends Controller
 
     public function delivery($id, Request $request)
     {
+		
         try {
             DB::beginTransaction();
 
@@ -465,6 +466,7 @@ class TransactionController extends Controller
             $transaction->shipping_number = $request->shipping_number;
             $transaction->shipping_attachment = $image_name;
 
+			Log::info('delivery go 22 $transaction->status = '.$transaction->status);
 			if(!$shipping_cost_status) {
 				$delivery_tracking = new DeliveryTracking();
 				$delivery_tracking->transaction_id = $transaction->id;
