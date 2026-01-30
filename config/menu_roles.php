@@ -14,6 +14,7 @@ return [
     'seller_mgmt' => [1, 2, 6],      // contoh: role 1 menu juga tampil di role 6
     'product_mgmt' => [1, 2, 6],
     'performance' => [1, 2, 6],
+    'setting_menu' => [1, 2],
 
     // Register (SKPD)
     'register_menus' => [5],

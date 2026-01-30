@@ -30,12 +30,10 @@ class AboutUsController extends Controller
                             data-link="' . e($row->link) . '"
                         >
                             <i class="fas fa-edit"></i>
-                        </button>'
-                        
-                        . ($row->is_deleteable ? '
+                        </button>
                         <button class="btn btn-danger btn-delete" data-id="' . $row->id . '">
                             <i class="fas fa-trash"></i>
-                        </button>' : '');
+                        </button>';
                 })
                 
                 ->addColumn('image', function ($row) {
@@ -105,6 +103,9 @@ class AboutUsController extends Controller
             $image = $request->file('image');
             $image_name = time() . '.' . $image->extension();
             $image->move(public_path('uploads/aboutus'), $image_name);
+            if ($aboutus->image && file_exists(public_path('uploads/aboutus/'.$aboutus->image))) {
+                @unlink(public_path('uploads/aboutus/'.$aboutus->image));
+            }
             $aboutus->image = $image_name;
         }
 
@@ -118,6 +119,13 @@ class AboutUsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $about = SettingAboutUs::findOrFail($id);
+
+        if ($about->image && file_exists(public_path('uploads/aboutus/'.$about->image))) {
+            @unlink(public_path('uploads/aboutus/'.$about->image));
+        }
+
+        $about->delete();
+        return response()->json(['status'=>200,'message'=>'Data berhasil dihapus','success'=>true]);
     }
 }

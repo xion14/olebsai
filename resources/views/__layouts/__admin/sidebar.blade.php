@@ -104,6 +104,19 @@
                 </li>
                 @endif
 
+                @if($can('setting_menu'))
+                <li class="dropdown">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-cog"></i> <span>Master Ekraf</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="{{ route('admin.setting.units') }}">Setting Units</a></li>
+                        <li><a class="nav-link" href="{{ route('admin.setting.categories') }}">Setting Categories</a></li>
+                        <li><a class="nav-link" href="{{ route('admin.setting.sub-categories') }}">Setting Sub Categories</a></li>
+                        <li><a class="nav-link" href="{{ route('admin.setting-cost') }}">Setting Cost</a></li>
+                        <li><a class="nav-link" href="{{ url('admin/setting/contact-admin') }}">Contact Admin</a></li>
+                    </ul>
+                </li>
+                @endif
+
                 <li class="dropdown">
                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-database"></i> <span>Stock</span></a>
                     <ul class="dropdown-menu">
@@ -165,7 +178,7 @@
                 @endif
 
                 <li><a class="nav-link" href="{{ route('admin.complaints.master') }}"><i class="fas fa-headset"></i> <span>Pusat Komplain</span></a></li>
-                <li><a class="nav-link" href="{{ route('admin.register.dashboard') }}"><i class="fas fa-clipboard-check"></i> <span>Dasbor SKPD</span></a></li>
+                {{-- Disembunyikan untuk role admin/super admin --}}
             </ul>
         @endif
     </aside>

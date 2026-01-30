@@ -34,15 +34,21 @@
                 class="w-100 h-100 object-fit-cover object-position-center rounded-3">
             <div class="w-100 h-100 position-absolute top-0 start-0 custom-background"></div>
         </div>
-        <div class="w-100 d-flex flex-column align-items-lg-center justify-content-lg-center gap-2 py-5 about-content">
-            <h6 class="fw-bold text-primary text-left text-lg-center">TENTANG KAMI</h6>
-            <h4 class="fw-bold text-left text-lg-center">
-                Tingkatkan koleksi Anda dengan barang-barang tradisional unik
-            </h4>
-            <span class="fs-6 fw-reguler text-left text-lg-center">
-                Olebsai adalah platform untuk menjual produk UMKM dari Indonesia, khususnya Merauke, dengan misi memajukan
-                usaha lokal.
-            </span>
+        <div class="w-full d-flex flex-column flex-lg-row align-items-lg-center justify-content-lg-between gap-4 gap-lg-5 py-5 about-content">
+            <div class="d-flex flex-column gap-2 about-text">
+                <h6 class="fw-bold text-primary text-left text-lg-center">TENTANG KAMI</h6>
+                <h4 class="fw-bold text-left text-lg-center">
+                    Tingkatkan koleksi Anda dengan barang-barang tradisional unik
+                </h4>
+                <span class="fs-6 fw-reguler text-left text-lg-center">
+                    Olebsai adalah platform untuk menjual produk UMKM dari Indonesia, khususnya Merauke, dengan misi memajukan
+                    usaha lokal.
+                </span>
+            </div>
+            <div class="about-image w-100 rounded-3" style="max-height: 32vh; overflow: hidden;">
+                <img src="{{ asset('assets/image/aboutus/content_about.jpg') }}"
+                    class="w-100 h-100 object-fit-cover object-position-center" alt="Tentang Kami">
+            </div>
         </div>
         <div class="w-full d-flex flex-column flex-lg-row align-items-lg-center justify-content-lg-between gap-5 py-5 mission-content">
             <div class="w-100 d-flex flex-column gap-2">
@@ -108,12 +114,15 @@
             success: function(response) {
                 const mainContent = $('.main-content');
                 const aboutContent = $('.about-content');
+                const aboutImageWrapper = $('.about-image');
+                const aboutImage = aboutImageWrapper.find('img');
                 const missionContent = $('.mission-content');
                 const impactContent = $('.impact-content');
                 
                 const imageSite = (value) => {
                     return '{{ asset('uploads/aboutus') }}' + '/' + value;
                 } 
+                const fallbackAboutImage = '{{ asset('assets/image/aboutus/content_about.jpg') }}';
 
                 if (response.success) {
                     const dataset = response.data;
@@ -122,16 +131,33 @@
                     const missionData = dataset.find(data => data.key === 'mission');
                     const impactData = dataset.filter(data => data.key === 'impact');
 
-                    mainContent.find('h1').text(mainData.title);
-                    mainContent.find('span').text(mainData.subtitle);
-                    mainContent.find('img').attr('src', imageSite(mainData.image));
+                    if (mainData) {
+                        mainContent.find('h1').text(mainData.title);
+                        mainContent.find('span').text(mainData.subtitle);
+                        if (mainData.image) {
+                            mainContent.find('img').attr('src', imageSite(mainData.image));
+                        }
+                    }
 
-                    aboutContent.find('h4').text(aboutData.title);
-                    aboutContent.find('span').text(aboutData.subtitle);
+                    if (aboutData) {
+                        aboutContent.find('h4').text(aboutData.title);
+                        aboutContent.find('span').text(aboutData.subtitle);
+                        if (aboutData.image) {
+                            aboutImage.attr('src', imageSite(aboutData.image));
+                        } else {
+                            aboutImage.attr('src', fallbackAboutImage);
+                        }
+                    } else {
+                        aboutImage.attr('src', fallbackAboutImage);
+                    }
 
-                    missionContent.find('h4').text(missionData.title);
-                    missionContent.find('span').text(missionData.subtitle);
-                    missionContent.find('img').attr('src', imageSite(missionData.image));
+                    if (missionData) {
+                        missionContent.find('h4').text(missionData.title);
+                        missionContent.find('span').text(missionData.subtitle);
+                        if (missionData.image) {
+                            missionContent.find('img').attr('src', imageSite(missionData.image));
+                        }
+                    }
 
                     impactContent.html('');
                     impactData.forEach(data => {
