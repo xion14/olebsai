@@ -4,6 +4,8 @@ namespace App\Http\Controllers\customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Banner;
+use Log;
 
 class HomeController extends Controller
 {
@@ -12,7 +14,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('customer.home.home');
+        $banners = Banner::all();
+        $url = url('/');
+        $banners = $banners->map(function($item) use($url) {
+            $item->image = $url.'/uploads/banner/'.$item->image;
+            return $item;
+        });
+        Log::info(print_r($banners->toArray(), true));
+
+        return view('customer.home.home', compact('banners'));
     }
 
     /**

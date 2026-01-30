@@ -492,7 +492,7 @@ class TransactionController extends Controller
                 DB::rollBack();
                 return response()->json([
                     'success' => false,
-                    'message' => 'Order not found',
+                    'message' => 'Transaksi tidak ditemukan',
                     'data' => [],
                 ], 404);
             }
@@ -501,7 +501,7 @@ class TransactionController extends Controller
                 DB::rollBack();
                 return response()->json([
                     'success' => false,
-                    'message' => 'Order has already been canceled',
+                    'message' => 'Transaksi sudah dibatalkan',
                     'data' => [],
                 ], 400);
             }
@@ -519,7 +519,7 @@ class TransactionController extends Controller
                 DB::rollBack();
                 return response()->json([
                     'success' => false,
-                    'message' => 'Order status is not valid for canceling',
+                    'message' => 'Transaksi sudah dibatalkan sebelumnya, refresh untuk lihat perubahan',
                     'data' => $transaction->status,
                 ], 400);
             }

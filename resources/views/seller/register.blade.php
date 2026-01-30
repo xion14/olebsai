@@ -136,20 +136,16 @@
                                             @enderror
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="oap" class="form-label">OAP (Orang Papua Asli)</label>
-                                            <select id="oap" name="oap" class="form-control">
+                                            <label for="oap" class="form-label">OAP(Orang Papua Asli)</label>
+                                            <select id="type_id" name="type_id" class="form-control">
                                                 <option value="">-- Select OAP --</option>
-                                                <option value="yes">Ya</option>
-                                                <option value="no">Tidak</option>
+                                                    <option value="yes">Ya</option>
+                                                    <option value="no">Tidak</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="profile_picture">Profile Picture</label>
-                                            <input type="file" id="profile_picture" name="profile_picture" class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="profile_dokumen">Dokumen Usaha (PDF/JPG/PNG)</label>
-                                            <input type="file" name="profile_dokumen" id="profile_dokumen" accept=".pdf,.jpg,.jpeg,.png" class="form-control">
+                                            <input type="file" name="profile_picture" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6 position-relative">
                                             <label for="password" class="form-label">Password</label>
@@ -358,7 +354,7 @@
 
             function processForm(name, tax_number, business_number, phone, username, email, password, country,
                 province, city,
-                zip_code, address, oap, profile_picture, profile_dokumen) {
+                zip_code, address, oap, profile_picture) {
                 return new Promise((resolve, reject) => {
                     let formData = new FormData();
                     formData.append('_token', '{{ csrf_token() }}');
@@ -376,7 +372,6 @@
                     formData.append('address', address);
                     formData.append('oap', oap);
                     formData.append('profile_picture', profile_picture);
-                    formData.append('profile_dokumen', profile_dokumen);
 
                     sweetAlertLoading();
 
@@ -427,10 +422,7 @@
                 let zip_code = $('#zip_code').val();
                 let address = $('#address').val();
                 let oap = $('#oap').val();
-                const picInput = document.getElementById('profile_picture');
-                const docInput = document.getElementById('profile_dokumen');
-                const profile_picture = (picInput && picInput.files && picInput.files.length) ? picInput.files[0] : null;
-                const profile_dokumen = (docInput && docInput.files && docInput.files.length) ? docInput.files[0] : null;
+                let profile_picture = $('#profile_picture').val();
                 let confirmPassword = $('#passwordConfirm').val();
 
                 if (confirmPassword == "") {
@@ -447,7 +439,7 @@
 
                 processForm(name, tax_number, business_number, phone, username, email, password, country,
                         province,
-                        city, zip_code, address, oap, profile_picture, profile_dokumen)
+                        city, zip_code, address, oap, profile_picture)
                     .then((response) => {
                         $('.is-invalid').removeClass('is-invalid');
                         $('.invalid-feedback').remove();

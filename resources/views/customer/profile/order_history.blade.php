@@ -771,9 +771,12 @@
                             console.log("Response API Add Address Customer: ", response);
                             if (response.success === true && response.message ==
                                 'Success cancel transaction') {
+                            	
                                 Swal.close();
                                 sweetAlertSuccess("Berhasil membatalkan pesanan");
-                                getDataWaitingConfirm();
+								window.location.reload();
+                                // // // // // getDataWaitingConfirm();
+
                             } else {
                                 Swal.close();
                                 sweetAlertDanger(response.message);
