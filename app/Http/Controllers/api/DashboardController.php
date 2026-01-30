@@ -15,7 +15,6 @@ use App\Models\Transaction;
 use App\Models\TransactionProduct;
 use App\Models\SettingCategory;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 
@@ -228,63 +227,6 @@ class DashboardController extends Controller
             'data' => $seller
         ]);
 
-    }
-
-    public function getSellerHealth(Request $request)
-    {
-        $activeSince = Carbon::now()->subDays(30);
-
-        // Seller aktif dihitung dari transaksi dalam 30 hari terakhir
-        $activeSellers = Transaction::whereNotNull('seller_id')
-            ->where('created_at', '>=', $activeSince)
-            ->distinct('seller_id')
-            ->count('seller_id');
-
-        // Seller baru yang menunggu persetujuan (status = 1)
-        $pendingSellers = Seller::where('status', 1)->count();
-
-        // Seller dengan komplain atau order batal/expired
-        $cancelExpr = "COALESCE(COUNT(DISTINCT CASE WHEN transactions.status IN (8,9) THEN transactions.id END),0)";
-        $complainExpr = "COALESCE(COUNT(DISTINCT CASE WHEN transaction_products.complain IS NOT NULL OR transaction_products.complain_status = 'eopn' THEN transaction_products.id END),0)";
-
-        $problematicSellers = Seller::select(
-                'sellers.id',
-                'sellers.name',
-                'sellers.email',
-                'sellers.phone',
-                DB::raw("$cancelExpr AS cancelled_orders"),
-                DB::raw("$complainExpr AS complaints"),
-                DB::raw("$cancelExpr + $complainExpr AS total_issues")
-            )
-            ->leftJoin('transactions', 'transactions.seller_id', '=', 'sellers.id')
-            ->leftJoin('transaction_products', 'transaction_products.transaction_id', '=', 'transactions.id')
-            ->groupBy('sellers.id', 'sellers.name', 'sellers.email', 'sellers.phone')
-            ->havingRaw("$cancelExpr + $complainExpr > 0")
-            ->orderByDesc('total_issues')
-            ->limit(5)
-            ->get()
-            ->map(function ($row) {
-                return [
-                    'id' => $row->id,
-                    'name' => $row->name,
-                    'email' => $row->email,
-                    'phone' => $row->phone,
-                    'complaints' => (int) $row->complaints,
-                    'cancelled_orders' => (int) $row->cancelled_orders,
-                    'total_issues' => (int) $row->total_issues,
-                ];
-            });
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Seller health metrics',
-            'data' => [
-                'active_sellers' => $activeSellers,
-                'pending_sellers' => $pendingSellers,
-                'problematic_sellers' => $problematicSellers,
-                'active_since' => $activeSince->toDateString(),
-            ]
-        ]);
     }
 
     public function TransactionStatistic(Request $request) {

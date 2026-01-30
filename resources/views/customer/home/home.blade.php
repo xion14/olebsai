@@ -2,6 +2,7 @@
 
 @section('head')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<link rel="stylesheet" href="imgs/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script type="text/javascript">
         window.API_KEY = '{{ env('API_KEY') }}';
@@ -11,7 +12,17 @@
 
 @section('body')
     <div class="w-100 mt-3">
-        <img onclick="window.location.href='/shop'" src="" alt="Banner Brand" class="banner-image">
+        <div class="g_slide" id="slides">
+		
+            <div class="switch_main">
+			@if($banners)
+				@foreach($banners as $banner)
+					<a class="item switch_item" href="#"><img data-src="{{ $banner->image }}" /></a>
+				@endforeach
+			@endif
+            </div>
+        </div>
+
     </div>
 
     {{-- Kategori Produk Start --}}
@@ -87,7 +98,21 @@
 @endsection
 
 @section('script')
+	<script type="module" src="{{ asset('js/require.js') }}"></script>
+	<script type="module" src="{{ asset('js/switchable.js') }}"></script>
     <script type="text/javascript">
+	
+	$(function(){
+		switchable({
+			$element: $('#slides')
+			,interval: 2000
+			,animateSpeed: 500
+			
+		});
+	});
+
+	
+	
         const swiper = new Swiper('.swiper', {
             slidesPerView: 3,
             spaceBetween: 30,

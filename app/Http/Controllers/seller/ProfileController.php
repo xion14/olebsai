@@ -36,8 +36,7 @@ class ProfileController extends Controller
                 'province' => 'required',
                 'city' => 'required',
                 'zip_code' => 'required',
-                'address' => 'required',
-                'profile_dokumen' => 'nullable|file|mimes:pdf,jpg,jpeg,png'
+                'address' => 'required'
             ],
         );
 
@@ -58,9 +57,6 @@ class ProfileController extends Controller
             $seller->zip = $validated['zip_code'];
             $seller->status = 1;
             $seller->note = NULl;
-            if ($request->hasFile('profile_dokumen')) {
-                $seller->profile_dokumen = $request->file('profile_dokumen')->store('seller', 'public');
-            }
             $seller->save();
 
             $user = User::findOrFail($seller->user_id);

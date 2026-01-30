@@ -9,13 +9,17 @@
 
         @php
             $role = auth()->user()->role ?? null;
-            $menuMap = file_exists(storage_path('app/menu_roles.json'))
+            $defaultMap = config('menu_roles', []);
+            $fileMap = file_exists(storage_path('app/menu_roles.json'))
                 ? json_decode(file_get_contents(storage_path('app/menu_roles.json')), true)
-                : config('menu_roles');
-            $can = function($keys) use ($role, $menuMap) {
-                foreach((array)$keys as $k){
+                : [];
+            $menuMap = array_merge($defaultMap, is_array($fileMap) ? $fileMap : []);
+            $can = function ($keys) use ($role, $menuMap) {
+                foreach ((array) $keys as $k) {
                     $allowed = $menuMap[$k] ?? [];
-                    if(in_array($role, $allowed, true)) return true;
+                    if (in_array($role, $allowed, true)) {
+                        return true;
+                    }
                 }
                 return false;
             };
@@ -30,30 +34,35 @@
                 <li><a href="{{ route('admin.register.coaching') }}" class="nav-link"><i class="fas fa-book-reader"></i> <span>Catatan Pembinaan</span></a></li>
                 <li><a href="{{ route('admin.register.verify') }}" class="nav-link"><i class="fas fa-user-check"></i> <span>Verifikasi Pelapak</span></a></li>
             </ul>
+
         {{-- Role 6: Admin User --}}
         @elseif($can('dashboard_user'))
             <ul class="sidebar-menu">
                 <li class="menu-header">Dashboard</li>
                 <li><a href="{{ route('admin.user.dashboard') }}" class="nav-link"><i class="fas fa-fire"></i> <span>Dasbor Operasional</span></a></li>
+
                 @if($can('seller_mgmt'))
-                    <li class="menu-header">Pelapak</li>
-                    <li><a href="{{ route('admin.sellers') }}" class="nav-link"><i class="fas fa-building"></i> <span>Data Pelapak</span></a></li>
+                <li class="menu-header">Pelapak</li>
+                <li><a href="{{ route('admin.sellers') }}" class="nav-link"><i class="fas fa-building"></i> <span>Data Pelapak</span></a></li>
                 @endif
+
                 @if($can('product_mgmt'))
-                    <li class="menu-header">Product</li>
-                    <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-box"></i> <span>Product</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="{{ route('admin.products') }}">Products</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.products.confirmation') }}">Confirmation</a></li>
-                            <li><a class="nav-link" href="{{ route('admin.products.disabled') }}">Produk Dinonaktifkan</a></li>
-                        </ul>
-                    </li>
+                <li class="menu-header">Product</li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-box"></i> <span>Product</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="{{ route('admin.products') }}">Products</a></li>
+                        <li><a class="nav-link" href="{{ route('admin.products.confirmation') }}">Confirmation</a></li>
+                        <li><a class="nav-link" href="{{ route('admin.products.disabled') }}">Produk Dinonaktifkan</a></li>
+                    </ul>
+                </li>
                 @endif
+
                 @if($can('performance'))
-                    <li><a href="{{ route('admin.sellers.performance') }}" class="nav-link"><i class="fas fa-chart-bar"></i> <span>Pemantauan Kinerja Pelapak</span></a></li>
+                <li><a href="{{ route('admin.sellers.performance') }}" class="nav-link"><i class="fas fa-chart-bar"></i> <span>Pemantauan Kinerja Pelapak</span></a></li>
                 @endif
             </ul>
+
         {{-- Role 7: Admin Konsumen --}}
         @elseif($can('dashboard_consumer'))
             <ul class="sidebar-menu">
@@ -63,6 +72,7 @@
                 <li><a href="{{ route('admin.consumer.reviews') }}" class="nav-link"><i class="fas fa-comment-alt"></i> <span>Pengawasan Ulasan</span></a></li>
                 <li><a href="{{ route('admin.consumer.analysis') }}" class="nav-link"><i class="fas fa-chart-pie"></i> <span>Analisis Pola Masalah</span></a></li>
             </ul>
+
         {{-- Role 1/2 Admin --}}
         @else
             <ul class="sidebar-menu">
@@ -125,11 +135,18 @@
                 </li>
 
                 <li class="dropdown">
-                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-image"></i> <span>Contents</span></a>
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-image"></i> <span>Contents</span></a>
                     <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{ route('admin.banners') }}">Banner</a></li>
-                        <li><a class="nav-link" href="{{ route('admin.information-bar.index') }}">Information</a></li>
+                        <li><a class="nav-link" href="{{ route('admin.banners') }}">Banner Home</a></li>
+                        <li><a class="nav-link" href="{{ url('admin/information-bar') }}">Information Bar</a></li>
                         <li><a class="nav-link" href="{{ route('admin.about-us') }}">About Us</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-gift"></i> <span>Voucher</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="{{ route('admin.vouchers') }}">Voucher</a></li>
                     </ul>
                 </li>
 
@@ -178,7 +195,6 @@
                 @endif
 
                 <li><a class="nav-link" href="{{ route('admin.complaints.master') }}"><i class="fas fa-headset"></i> <span>Pusat Komplain</span></a></li>
-                {{-- Disembunyikan untuk role admin/super admin --}}
             </ul>
         @endif
     </aside>

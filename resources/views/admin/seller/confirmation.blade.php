@@ -1,4 +1,4 @@
-﻿@extends('__layouts.__admin.main')
+@extends('__layouts.__admin.main')
 
 @section('body')
     <div class="main-content">
@@ -18,7 +18,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="sellerTable" class="table table-striped my-4">
+                                    <table id="sellerTable" class="table table-striped my-4" id="table-1">
                                         <thead>
                                             <tr>
                                                 <th width="5%" class="text-center">#</th>
@@ -28,8 +28,6 @@
                                                 <th class="text-center">Business Number</th>
                                                 <th class="text-center">Phone</th>
                                                 <th class="text-center">Location</th>
-                                                <th class="text-center">OAP</th>
-                                                <th class="text-center">Dokumen</th>
                                                 <th width="20%" class="text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -111,19 +109,6 @@
                         data: 'location',
                         name: 'location',
                         searchable: true
-                    },
-                    {
-                        data: 'oap',
-                        name: 'oap',
-                        searchable: true,
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'document',
-                        name: 'document',
-                        searchable: false,
-                        orderable: false,
-                        className: 'text-center'
                     },
                     {
                         data: 'action',
