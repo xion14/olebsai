@@ -105,8 +105,8 @@
 	$(function(){
 		switchable({
 			$element: $('#slides')
-			,interval: 2000
-			,animateSpeed: 500
+			,interval: 5000
+			,animateSpeed: 1500
 			
 		});
 	});
