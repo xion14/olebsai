@@ -67,10 +67,6 @@ class BannerController extends Controller
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            $check_banner = Banner::count();
-            if ($check_banner > 0) {
-                return response()->json(['status' => 400, 'text' => 'Banner already exist']);
-            }
             $input = $request->all();
             if ($image = $request->file('image')) {
                 $destinationPath = public_path('uploads/banner/');
