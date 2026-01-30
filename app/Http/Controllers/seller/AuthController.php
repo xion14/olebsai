@@ -41,7 +41,8 @@ class AuthController extends Controller
                 'zip_code' => 'required',
                 'address' => 'required', 
                 'oap' => 'required',
-                'profile_picture' => 'required'
+                'profile_picture' => 'required|file',
+                'profile_dokumen' => 'required|file|mimes:pdf,jpg,jpeg,png'
             ],
         );
 
@@ -62,6 +63,12 @@ class AuthController extends Controller
             $seller->country = $validated['country'];
             $seller->zip = $validated['zip_code'];
             $seller->oap = $validated['oap'];
+            if ($request->hasFile('profile_picture')) {
+                $seller->profile_picture = $request->file('profile_picture')->store('seller', 'public');
+            }
+            if ($request->hasFile('profile_dokumen')) {
+                $seller->profile_dokumen = $request->file('profile_dokumen')->store('seller', 'public');
+            }
             $seller->save();
             // User
             $user = new User();

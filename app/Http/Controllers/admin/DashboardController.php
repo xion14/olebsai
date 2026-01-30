@@ -4,7 +4,6 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 use App\Models\Seller;
@@ -20,7 +19,6 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard');
     }
-
     public function getDataDashboard ()
     {
         $data = [

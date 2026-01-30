@@ -28,6 +28,30 @@
                 </h4>
               </div>
               <div class="card-body">
+                @if($seller->note)
+                  <div class="alert alert-warning">
+                    <strong>Catatan Admin:</strong> {{ $seller->note }}
+                  </div>
+                @endif
+
+                @if($seller->profile_dokumen)
+                  <div class="mb-3">
+                    <span>Dokumen saat ini: </span>
+                    <a href="{{ asset('storage/'.$seller->profile_dokumen) }}" target="_blank" class="btn btn-sm btn-info">Lihat Dokumen</a>
+                  </div>
+                @endif
+
+                <div class="text-center mb-4">
+                  @php
+                      $profileImage = $seller->profile_picture
+                          ? asset('storage/' . $seller->profile_picture)
+                          : asset('assets/image/profile/profile.jpeg');
+                  @endphp
+                  <img src="{{ $profileImage }}" alt="Foto Profil" class="rounded-circle shadow-sm"
+                       style="width: 140px; height: 140px; object-fit: cover;">
+                  <p class="mt-2 mb-0 text-muted" style="font-size: 13px;">Foto profil Anda</p>
+                </div>
+
                 <form id="profileForm">
                 <div class="row">
                   <div class="col-md-6">
@@ -76,6 +100,12 @@
                   <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
                     <textarea name="address" id="address" value="{{ $seller->address }}" class="form-control" rows="3" {{ $seller->status == 1 ? 'disabled' : '' }}>{{ $seller->address }}</textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="profile_dokumen" class="form-label">Upload Dokumen (PDF/JPG/PNG)</label>
+                    <input type="file" id="profile_dokumen" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+                    <small class="text-muted">Unggah ulang dokumen jika diminta perbaikan.</small>
                   </div>
 
                   <div class="row">
@@ -179,7 +209,7 @@
       let seller_id = @json($seller->id);
 
       function processForm(name, tax_number, business_number, phone, email, password, country, province, city,
-        zip_code, address) {
+        zip_code, address, profile_dokumen) {
         return new Promise((resolve, reject) => {
           let formData = new FormData();
           formData.append('_token', '{{ csrf_token() }}');
@@ -196,6 +226,9 @@
           formData.append('city', city);
           formData.append('zip_code', zip_code);
           formData.append('address', address)
+          if(profile_dokumen){
+            formData.append('profile_dokumen', profile_dokumen);
+          }
 
 
           $.ajax({
@@ -228,9 +261,11 @@
         let city = $('#city').val();
         let zip_code = $('#zip_code').val();
         let address = $('#address').val();
+        const docInput = document.getElementById('profile_dokumen');
+        const profile_dokumen = (docInput && docInput.files && docInput.files.length) ? docInput.files[0] : null;
 
         processForm(name, tax_number, business_number, phone, email, password, country, province, city, zip_code,
-            address)
+            address, profile_dokumen)
           .then((response) => {
             $('.is-invalid').removeClass('is-invalid');
             $('.invalid-feedback').remove();

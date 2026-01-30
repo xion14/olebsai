@@ -1,11 +1,11 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 30 Jan 2026 pada 17.49
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jan 30, 2026 at 08:26 AM
+-- Server version: 9.1.0
+-- PHP Version: 8.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,18 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin_priviledge`
+-- Table structure for table `admin_priviledge`
 --
 
-CREATE TABLE `admin_priviledge` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `admin_priviledge`;
+CREATE TABLE IF NOT EXISTS `admin_priviledge` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `priviledge_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `admin_priviledge`
+-- Dumping data for table `admin_priviledge`
 --
 
 INSERT INTO `admin_priviledge` (`id`, `priviledge_name`, `created_at`, `updated_at`) VALUES
@@ -46,22 +48,24 @@ INSERT INTO `admin_priviledge` (`id`, `priviledge_name`, `created_at`, `updated_
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `banners`
+-- Table structure for table `banners`
 --
 
-CREATE TABLE `banners` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `image` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `banners`;
+CREATE TABLE IF NOT EXISTS `banners` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `banners`
+-- Dumping data for table `banners`
 --
 
 INSERT INTO `banners` (`id`, `title`, `description`, `image`, `link`, `status`, `created_at`, `updated_at`) VALUES
@@ -70,43 +74,47 @@ INSERT INTO `banners` (`id`, `title`, `description`, `image`, `link`, `status`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `cart_products`
+-- Table structure for table `cart_products`
 --
 
-CREATE TABLE `cart_products` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `seller_id` varchar(255) DEFAULT NULL,
-  `price_type` enum('single','multi') NOT NULL DEFAULT 'single',
-  `product_type_id` int(11) NOT NULL,
-  `price` int(11) DEFAULT NULL,
-  `duration` text DEFAULT NULL,
-  `duration_info` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `detail` text DEFAULT NULL,
-  `customer_id` bigint(20) NOT NULL,
-  `product_id` bigint(20) NOT NULL,
-  `qty` int(11) NOT NULL,
-  `checked` enum('no','yes') NOT NULL DEFAULT 'no',
+DROP TABLE IF EXISTS `cart_products`;
+CREATE TABLE IF NOT EXISTS `cart_products` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `seller_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price_type` enum('single','multi') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'single',
+  `product_type_id` int NOT NULL,
+  `price` int DEFAULT NULL,
+  `duration` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `duration_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `customer_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `qty` int NOT NULL,
+  `checked` enum('no','yes') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `cities`
+-- Table structure for table `cities`
 --
 
-CREATE TABLE `cities` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `cities`;
+CREATE TABLE IF NOT EXISTS `cities` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `province_id` int(11) NOT NULL,
+  `province_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=636 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `cities`
+-- Dumping data for table `cities`
 --
 
 INSERT INTO `cities` (`id`, `name`, `province_id`, `created_at`, `updated_at`) VALUES
@@ -487,32 +495,36 @@ INSERT INTO `cities` (`id`, `name`, `province_id`, `created_at`, `updated_at`) V
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customers`
+-- Table structure for table `customers`
 --
 
-CREATE TABLE `customers` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `code` varchar(20) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
+DROP TABLE IF EXISTS `customers`;
+CREATE TABLE IF NOT EXISTS `customers` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `gender` enum('male','female') DEFAULT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `wallet` bigint(20) NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
-  `address_status` enum('yes','no') NOT NULL DEFAULT 'yes',
-  `image_user_profile` varchar(255) DEFAULT NULL,
+  `gender` enum('male','female') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint NOT NULL,
+  `wallet` bigint NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `address_status` enum('yes','no') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'yes',
+  `image_user_profile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `bank_name` varchar(255) DEFAULT NULL,
-  `bank_account_name` varchar(255) DEFAULT NULL,
-  `bank_account_number` varchar(255) DEFAULT NULL,
-  `bank_code` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_account_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_account_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `customers_email_unique` (`email`),
+  UNIQUE KEY `customers_user_id_unique` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `customers`
+-- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`id`, `code`, `name`, `email`, `phone`, `birthday`, `gender`, `user_id`, `wallet`, `status`, `address_status`, `image_user_profile`, `created_at`, `updated_at`, `bank_name`, `bank_account_name`, `bank_account_number`, `bank_code`) VALUES
@@ -530,30 +542,32 @@ INSERT INTO `customers` (`id`, `code`, `name`, `email`, `phone`, `birthday`, `ge
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customer_addresses`
+-- Table structure for table `customer_addresses`
 --
 
-CREATE TABLE `customer_addresses` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `customer_id` bigint(20) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `phone` varchar(14) NOT NULL,
-  `road` varchar(100) NOT NULL,
-  `city` varchar(100) NOT NULL,
-  `province` varchar(100) NOT NULL,
-  `province_id` int(11) DEFAULT NULL,
-  `city_id` int(11) DEFAULT NULL,
-  `district_id` int(11) DEFAULT NULL,
-  `zip_code` varchar(10) NOT NULL,
-  `address` text NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
-  `active` enum('yes','no') NOT NULL DEFAULT 'no',
+DROP TABLE IF EXISTS `customer_addresses`;
+CREATE TABLE IF NOT EXISTS `customer_addresses` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `road` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `province` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `province_id` int DEFAULT NULL,
+  `city_id` int DEFAULT NULL,
+  `district_id` int DEFAULT NULL,
+  `zip_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `active` enum('yes','no') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `customer_addresses`
+-- Dumping data for table `customer_addresses`
 --
 
 INSERT INTO `customer_addresses` (`id`, `customer_id`, `name`, `phone`, `road`, `city`, `province`, `province_id`, `city_id`, `district_id`, `zip_code`, `address`, `status`, `active`, `created_at`, `updated_at`) VALUES
@@ -570,57 +584,67 @@ INSERT INTO `customer_addresses` (`id`, `customer_id`, `name`, `phone`, `road`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customer_balances`
+-- Table structure for table `customer_balances`
 --
 
-CREATE TABLE `customer_balances` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `customer_id` bigint(20) NOT NULL,
-  `transaction_id` bigint(20) DEFAULT NULL,
-  `customer_withdraw_id` bigint(20) DEFAULT NULL,
+DROP TABLE IF EXISTS `customer_balances`;
+CREATE TABLE IF NOT EXISTS `customer_balances` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint NOT NULL,
+  `transaction_id` bigint DEFAULT NULL,
+  `customer_withdraw_id` bigint DEFAULT NULL,
   `amount` double NOT NULL,
-  `type` enum('in','out') NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `customer_withdraws`
---
-
-CREATE TABLE `customer_withdraws` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `customer_id` bigint(20) NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `amount` double NOT NULL,
-  `success_at` datetime DEFAULT NULL,
-  `approval_by` bigint(20) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `type` enum('in','out') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `note` bigint(20) DEFAULT NULL
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `customer_balances_transaction_id_unique` (`transaction_id`),
+  UNIQUE KEY `customer_balances_customer_withdraw_id_unique` (`customer_withdraw_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `delivery_trackings`
+-- Table structure for table `customer_withdraws`
 --
 
-CREATE TABLE `delivery_trackings` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `transaction_id` bigint(20) UNSIGNED NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `note` text DEFAULT NULL,
+DROP TABLE IF EXISTS `customer_withdraws`;
+CREATE TABLE IF NOT EXISTS `customer_withdraws` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint NOT NULL,
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` double NOT NULL,
+  `success_at` datetime DEFAULT NULL,
+  `approval_by` bigint DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `note` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `customer_withdraws_code_unique` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data untuk tabel `delivery_trackings`
+-- Table structure for table `delivery_trackings`
+--
+
+DROP TABLE IF EXISTS `delivery_trackings`;
+CREATE TABLE IF NOT EXISTS `delivery_trackings` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `transaction_id` bigint UNSIGNED NOT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `delivery_trackings_transaction_id_foreign` (`transaction_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `delivery_trackings`
 --
 
 INSERT INTO `delivery_trackings` (`id`, `transaction_id`, `status`, `note`, `created_at`, `updated_at`) VALUES
@@ -628,25 +652,46 @@ INSERT INTO `delivery_trackings` (`id`, `transaction_id`, `status`, `note`, `cre
 (2, 1, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 00000', '2026-01-18 14:37:41', '2026-01-18 14:37:41'),
 (3, 1, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-18 14:54:27', '2026-01-18 14:54:27'),
 (4, 1, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 00000', '2026-01-18 14:55:30', '2026-01-18 14:55:30'),
+(5, 2, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-19 12:44:04', '2026-01-19 12:44:04'),
+(6, 2, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 0000', '2026-01-19 12:44:45', '2026-01-19 12:44:45'),
+(7, 3, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-19 12:54:16', '2026-01-19 12:54:16'),
+(8, 3, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 00000', '2026-01-19 12:55:21', '2026-01-19 12:55:21'),
+(9, 8, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-20 08:05:24', '2026-01-20 08:05:24'),
+(10, 8, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 99999', '2026-01-20 08:06:13', '2026-01-20 08:06:13'),
+(11, 7, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-20 08:19:36', '2026-01-20 08:19:36'),
+(12, 9, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-20 08:30:12', '2026-01-20 08:30:12'),
+(13, 9, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 000000', '2026-01-20 08:32:56', '2026-01-20 08:32:56'),
+(14, 10, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-20 08:44:02', '2026-01-20 08:44:02'),
+(15, 10, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 00000', '2026-01-20 08:45:37', '2026-01-20 08:45:37'),
+(16, 20, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-20 10:15:35', '2026-01-20 10:15:35'),
+(17, 20, 'Telah Diserahkan ke Jasa Kirim', 'Barang Telah diserahkan ke jasa kirim dengan nomor resi 0000', '2026-01-20 10:16:45', '2026-01-20 10:16:45'),
+(18, 19, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-20 10:19:28', '2026-01-20 10:19:28'),
+(19, 19, 'Telah Diserahkan ke Customer', 'Barang Telah diserahkan ke Customer ', '2026-01-20 10:28:46', '2026-01-20 10:28:46'),
+(21, 18, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-20 12:41:48', '2026-01-20 12:41:48'),
+(22, 18, 'Telah Diserahkan ke Customer', 'Barang Telah diserahkan ke Customer ', '2026-01-20 12:43:18', '2026-01-20 12:43:18'),
+(23, 21, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-25 09:44:13', '2026-01-25 09:44:13'),
+(33, 21, 'Telah Diserahkan ke Customer', 'Barang Telah diserahkan ke Customer ', '2026-01-25 10:14:52', '2026-01-25 10:14:52'),
 (34, 1, 'Sedang Dikemas', 'Pesanan sedang dikemas oleh penjual', '2026-01-28 06:59:28', '2026-01-28 06:59:28'),
 (35, 1, 'Telah Diserahkan ke Customer', 'Barang Telah diserahkan ke Customer ', '2026-01-28 07:01:37', '2026-01-28 07:01:37');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `districts`
+-- Table structure for table `districts`
 --
 
-CREATE TABLE `districts` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `districts`;
+CREATE TABLE IF NOT EXISTS `districts` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `city_id` int(11) NOT NULL,
+  `city_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7127 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `districts`
+-- Dumping data for table `districts`
 --
 
 INSERT INTO `districts` (`id`, `name`, `city_id`, `created_at`, `updated_at`) VALUES
@@ -6232,36 +6277,40 @@ INSERT INTO `districts` (`id`, `name`, `city_id`, `created_at`, `updated_at`) VA
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `failed_jobs`
+-- Table structure for table `failed_jobs`
 --
 
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `klaster_ekraf`
+-- Table structure for table `klaster_ekraf`
 --
 
-CREATE TABLE `klaster_ekraf` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `klaster_ekraf`;
+CREATE TABLE IF NOT EXISTS `klaster_ekraf` (
+  `id` int NOT NULL,
   `nama_klaster` varchar(255) NOT NULL,
-  `deskripsi_klaster` int(11) DEFAULT NULL,
+  `deskripsi_klaster` int DEFAULT NULL,
   `status_aktif` enum('yes','no') NOT NULL DEFAULT 'no',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `klaster_ekraf`
+-- Dumping data for table `klaster_ekraf`
 --
 
 INSERT INTO `klaster_ekraf` (`id`, `nama_klaster`, `deskripsi_klaster`, `status_aktif`, `created_at`, `updated_at`) VALUES
@@ -6272,17 +6321,19 @@ INSERT INTO `klaster_ekraf` (`id`, `nama_klaster`, `deskripsi_klaster`, `status_
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `migrations`
+-- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -6341,34 +6392,39 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `model_has_permissions`
+-- Table structure for table `model_has_permissions`
 --
 
-CREATE TABLE `model_has_permissions` (
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL
+DROP TABLE IF EXISTS `model_has_permissions`;
+CREATE TABLE IF NOT EXISTS `model_has_permissions` (
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `model_has_roles`
+-- Table structure for table `model_has_roles`
 --
 
-CREATE TABLE `model_has_roles` (
-  `role_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL
+DROP TABLE IF EXISTS `model_has_roles`;
+CREATE TABLE IF NOT EXISTS `model_has_roles` (
+  `role_id` bigint UNSIGNED NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `model_has_roles`
+-- Dumping data for table `model_has_roles`
 --
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Models\\User', 1),
-(2, 'App\\Models\\User', 45),
 (4, 'App\\Models\\User', 2),
 (4, 'App\\Models\\User', 3),
 (4, 'App\\Models\\User', 4),
@@ -6388,28 +6444,31 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (4, 'App\\Models\\User', 18),
 (4, 'App\\Models\\User', 19),
 (4, 'App\\Models\\User', 20),
-(4, 'App\\Models\\User', 21);
+(4, 'App\\Models\\User', 21),
+(2, 'App\\Models\\User', 45);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `notification_admins`
+-- Table structure for table `notification_admins`
 --
 
-CREATE TABLE `notification_admins` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT 0,
-  `title` varchar(255) DEFAULT NULL,
-  `content` text NOT NULL,
-  `type` enum('info','warning','error','success') NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
+DROP TABLE IF EXISTS `notification_admins`;
+CREATE TABLE IF NOT EXISTS `notification_admins` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('info','warning','error','success') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `notification_admins`
+-- Dumping data for table `notification_admins`
 --
 
 INSERT INTO `notification_admins` (`id`, `is_read`, `title`, `content`, `type`, `url`, `deleted_at`, `created_at`, `updated_at`) VALUES
@@ -6482,31 +6541,31 @@ INSERT INTO `notification_admins` (`id`, `is_read`, `title`, `content`, `type`, 
 (67, 0, 'Add Product', 'Product gewgweg ewgew hgew h has been submited by seller', 'info', '/admin/products/confirmation/', NULL, '2026-01-27 05:25:19', '2026-01-27 05:25:19'),
 (68, 0, 'Add Product', 'Product 30925029yt032 has been submited by seller', 'info', '/admin/products/confirmation/', NULL, '2026-01-27 05:26:50', '2026-01-27 05:26:50'),
 (69, 0, 'Add Product', 'Product digital reeza has been submited by seller', 'info', '/admin/products/confirmation/', NULL, '2026-01-28 06:49:32', '2026-01-28 06:49:32'),
-(70, 0, 'Order Delivery', 'Order #CO202601281356003001 has been delivery by seller', 'info', '/admin/transactions/1', NULL, '2026-01-28 07:01:37', '2026-01-28 07:01:37'),
-(72, 0, 'Registration Seller', 'Seller fajar has been registered', 'info', '/admin/sellers/confirmation/', NULL, '2026-01-30 15:13:30', '2026-01-30 15:13:30'),
-(73, 0, 'Registration Seller', 'Seller fajara has been registered', 'info', '/admin/sellers/confirmation/', NULL, '2026-01-30 15:36:46', '2026-01-30 15:36:46');
+(70, 0, 'Order Delivery', 'Order #CO202601281356003001 has been delivery by seller', 'info', '/admin/transactions/1', NULL, '2026-01-28 07:01:37', '2026-01-28 07:01:37');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `notification_sellers`
+-- Table structure for table `notification_sellers`
 --
 
-CREATE TABLE `notification_sellers` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT 0,
-  `title` varchar(255) DEFAULT NULL,
-  `content` text NOT NULL,
-  `type` enum('info','warning','error','success') NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
+DROP TABLE IF EXISTS `notification_sellers`;
+CREATE TABLE IF NOT EXISTS `notification_sellers` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('info','warning','error','success') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `notification_sellers`
+-- Dumping data for table `notification_sellers`
 --
 
 INSERT INTO `notification_sellers` (`id`, `user_id`, `is_read`, `title`, `content`, `type`, `url`, `deleted_at`, `created_at`, `updated_at`) VALUES
@@ -6632,24 +6691,26 @@ INSERT INTO `notification_sellers` (`id`, `user_id`, `is_read`, `title`, `conten
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `notification_users`
+-- Table structure for table `notification_users`
 --
 
-CREATE TABLE `notification_users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT 0,
-  `title` varchar(255) DEFAULT NULL,
-  `content` text NOT NULL,
-  `type` enum('info','warning','error','success') NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
+DROP TABLE IF EXISTS `notification_users`;
+CREATE TABLE IF NOT EXISTS `notification_users` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` enum('info','warning','error','success') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `notification_users`
+-- Dumping data for table `notification_users`
 --
 
 INSERT INTO `notification_users` (`id`, `user_id`, `is_read`, `title`, `content`, `type`, `url`, `deleted_at`, `created_at`, `updated_at`) VALUES
@@ -6708,53 +6769,65 @@ INSERT INTO `notification_users` (`id`, `user_id`, `is_read`, `title`, `content`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `other_costs`
+-- Table structure for table `other_costs`
 --
 
-CREATE TABLE `other_costs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `transaction_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+DROP TABLE IF EXISTS `other_costs`;
+CREATE TABLE IF NOT EXISTS `other_costs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `transaction_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `amount` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `other_costs_transaction_id_foreign` (`transaction_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `other_costs`
+-- Dumping data for table `other_costs`
 --
 
 INSERT INTO `other_costs` (`id`, `transaction_id`, `name`, `amount`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Other', 50, '2025-03-30 19:45:00', '2025-03-30 19:45:00');
+(1, 1, 'Other', 50, '2025-03-30 19:45:00', '2025-03-30 19:45:00'),
+(2, 2, 'Admin', 100, '2025-03-30 20:04:31', '2025-03-30 20:04:31'),
+(3, 3, 'Admin', 100, '2025-04-02 10:57:54', '2025-04-02 10:57:54'),
+(6, 4, 'packing kayu', 1, '2025-04-03 09:04:42', '2025-04-03 09:04:42'),
+(7, 4, 'bubble', 1, '2025-04-03 09:04:56', '2025-04-03 09:04:56');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `password_reset_tokens`
+-- Table structure for table `password_reset_tokens`
 --
 
-CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `permissions`
---
-
-CREATE TABLE `permissions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `guard_name` varchar(255) NOT NULL,
+DROP TABLE IF EXISTS `password_reset_tokens`;
+CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data untuk tabel `permissions`
+-- Table structure for table `permissions`
+--
+
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `permissions`
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
@@ -6763,68 +6836,75 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `personal_access_tokens`
+-- Table structure for table `personal_access_tokens`
 --
 
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+DROP TABLE IF EXISTS `personal_access_tokens`;
+CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `products`
+-- Table structure for table `products`
 --
 
-CREATE TABLE `products` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `admin_cost_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `seller_id` int(11) NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `sub_category_id` int(11) DEFAULT NULL,
-  `unit_id` int(11) NOT NULL,
-  `weight` int(11) NOT NULL,
-  `stock` int(11) NOT NULL,
-  `price` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `admin_cost_id` bigint UNSIGNED DEFAULT NULL,
+  `seller_id` int NOT NULL,
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_id` int NOT NULL,
+  `category_id` int NOT NULL,
+  `sub_category_id` int DEFAULT NULL,
+  `unit_id` int NOT NULL,
+  `weight` int NOT NULL,
+  `stock` int NOT NULL,
+  `price` bigint NOT NULL,
   `seller_price` double DEFAULT NULL,
   `admin_cost` double DEFAULT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `digitals` longtext DEFAULT NULL,
-  `subtimes` longtext DEFAULT NULL,
-  `file_1` varchar(700) DEFAULT NULL,
-  `file_2` varchar(700) DEFAULT NULL,
-  `file_3` varchar(700) DEFAULT NULL,
-  `file_4` varchar(700) DEFAULT NULL,
-  `image_1` varchar(100) NOT NULL,
-  `image_2` varchar(100) DEFAULT NULL,
-  `image_3` varchar(100) DEFAULT NULL,
-  `image_4` varchar(100) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `note` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
-  `total_sells` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `digitals` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `subtimes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `file_1` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_2` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_3` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file_4` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_3` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_4` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `total_sells` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `products_code_unique` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `products`
+-- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `admin_cost_id`, `seller_id`, `code`, `name`, `type_id`, `category_id`, `sub_category_id`, `unit_id`, `weight`, `stock`, `price`, `seller_price`, `admin_cost`, `slug`, `digitals`, `subtimes`, `file_1`, `file_2`, `file_3`, `file_4`, `image_1`, `image_2`, `image_3`, `image_4`, `description`, `note`, `status`, `total_sells`, `created_at`, `updated_at`) VALUES
-(1, NULL, 1, 'YUZK2DAHKN', 'Aksesoris Etnik', 0, 2, NULL, 1, 0, 32, 238121, 238121, 0, 'aksesoris-etnik', NULL, NULL, '', NULL, NULL, NULL, 'aksesoris-etnik.jpg', NULL, NULL, NULL, 'Gelang, kalung, dan anting handmade dengan sentuhan budaya nusantara.', NULL, 2, NULL, '2025-03-30 19:23:47', '2026-01-30 11:52:53'),
+(1, NULL, 1, 'YUZK2DAHKN', 'Aksesoris Etnik', 0, 2, NULL, 1, 0, 32, 238121, 238121, 0, 'aksesoris-etnik', NULL, NULL, '', NULL, NULL, NULL, 'aksesoris-etnik.jpg', NULL, NULL, NULL, 'Gelang, kalung, dan anting handmade dengan sentuhan budaya nusantara.', NULL, 2, NULL, '2025-03-30 19:23:47', '2025-12-30 08:15:22'),
 (2, NULL, 1, 'FGLKTITIMH', 'Lukisan Tradisional', 0, 2, NULL, 1, 0, 11, 241039, 241039, 0, 'lukisan-tradisional', NULL, NULL, '', NULL, NULL, NULL, 'lukisan-tradisional.jpg', NULL, NULL, NULL, 'Lukisan etnik dengan nuansa budaya Indonesia yang artistik.', NULL, 2, NULL, '2025-03-30 19:23:47', '2025-12-30 08:15:22'),
 (3, NULL, 1, 'IHZ2DXFAQ6', 'Power Bank Batik', 0, 4, NULL, 1, 0, 27, 483308, 483308, 0, 'power-bank-batik', NULL, NULL, '', NULL, NULL, NULL, 'power-bank-batik.jpg', NULL, NULL, NULL, 'Power bank dengan motif batik eksklusif yang unik.', NULL, 2, NULL, '2025-03-30 19:23:47', '2025-12-30 08:15:22'),
 (4, NULL, 1, 'MNNXY6MGOZ', 'Minyak Kayu Putih', 0, 5, NULL, 1, 0, 22, 426946, 426946, 0, 'minyak-kayu-putih', NULL, NULL, '', NULL, NULL, NULL, 'minyak-kayu-putih.jpg', NULL, NULL, NULL, 'Minyak esensial alami yang memberikan efek hangat dan menenangkan.', NULL, 2, NULL, '2025-03-30 19:23:47', '2025-12-30 08:15:22'),
@@ -6956,21 +7036,24 @@ INSERT INTO `products` (`id`, `admin_cost_id`, `seller_id`, `code`, `name`, `typ
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `product_logs`
+-- Table structure for table `product_logs`
 --
 
-CREATE TABLE `product_logs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `activity` varchar(50) NOT NULL,
-  `note` text DEFAULT NULL,
-  `product_id` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `product_logs`;
+CREATE TABLE IF NOT EXISTS `product_logs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `activity` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `product_id` bigint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_logs_product_id_user_id_index` (`product_id`,`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `product_logs`
+-- Dumping data for table `product_logs`
 --
 
 INSERT INTO `product_logs` (`id`, `user_id`, `activity`, `note`, `product_id`, `created_at`, `updated_at`) VALUES
@@ -7093,25 +7176,25 @@ INSERT INTO `product_logs` (`id`, `user_id`, `activity`, `note`, `product_id`, `
 (115, 34, 'Create', '{\"code\":\"eowihgpoeghoewg\",\"name\":\"gewgweg ewgew hgew h\",\"type_id\":\"3\",\"category_id\":\"1\",\"unit_id\":\"1\",\"stock\":\"10\",\"price\":20,\"description\":\"ofeiwhgope qhpgoe wpgew gew\",\"weight\":\"0\",\"image_1\":\"2279_gewgweg ewgew hgew h671_1769491519_866789.jpg\",\"seller_id\":24,\"subtimes\":\"a:2:{i:0;a:3:{s:7:\\\"subtime\\\";s:8:\\\"1  bulan\\\";s:8:\\\"subprice\\\";i:10000;s:14:\\\"subsellerprice\\\";i:10000;}i:1;a:3:{s:7:\\\"subtime\\\";s:8:\\\"2 bulabn\\\";s:8:\\\"subprice\\\";i:20000;s:14:\\\"subsellerprice\\\";i:20000;}}\",\"digitals\":\"a:1:{i:0;a:1:{s:4:\\\"name\\\";s:53:\\\"1-2279_gewgweg ewgew hgew h745_1769491519_646421.jpeg\\\";}}\",\"slug\":\"gewgweg-ewgew-hgew-h-2601271225\",\"seller_price\":\"20\",\"admin_cost_id\":null,\"admin_cost\":0,\"sub_category_id\":\"1\",\"updated_at\":\"2026-01-27T05:25:19.000000Z\",\"created_at\":\"2026-01-27T05:25:19.000000Z\",\"id\":162}', 162, '2026-01-27 05:25:19', '2026-01-27 05:25:19'),
 (116, 34, 'Create', '{\"code\":\"oefiwhgoiew pgoew\",\"name\":\"30925029yt032\",\"type_id\":\"1\",\"category_id\":\"6\",\"unit_id\":\"1\",\"stock\":\"10\",\"price\":20,\"description\":\"foto kurang jelas, tolong diganti\",\"weight\":\"0\",\"image_1\":\"6888_30925029yt032679_1769491610_940329.jpeg\",\"seller_id\":24,\"slug\":\"30925029yt032-2601271226\",\"seller_price\":\"20\",\"admin_cost_id\":null,\"admin_cost\":0,\"sub_category_id\":null,\"updated_at\":\"2026-01-27T05:26:50.000000Z\",\"created_at\":\"2026-01-27T05:26:50.000000Z\",\"id\":163}', 163, '2026-01-27 05:26:50', '2026-01-27 05:26:50'),
 (117, 34, 'Create', '{\"code\":\"digitalreez\",\"name\":\"digital reeza\",\"type_id\":\"3\",\"category_id\":\"1\",\"unit_id\":\"1\",\"stock\":\"10\",\"price\":20000,\"description\":\"ini adalh test produk digital\",\"weight\":\"0\",\"image_1\":\"6265_digital reeza437_1769582972_614693.png\",\"seller_id\":24,\"subtimes\":\"a:2:{i:0;a:3:{s:7:\\\"subtime\\\";s:7:\\\"1 bulan\\\";s:8:\\\"subprice\\\";i:15000;s:14:\\\"subsellerprice\\\";i:15000;}i:1;a:3:{s:7:\\\"subtime\\\";s:7:\\\"2 bulan\\\";s:8:\\\"subprice\\\";i:25000;s:14:\\\"subsellerprice\\\";i:25000;}}\",\"digitals\":\"a:1:{i:0;a:1:{s:4:\\\"name\\\";s:45:\\\"1-6265_digital reeza267_1769582972_726305.png\\\";}}\",\"slug\":\"digital-reeza-2601281349\",\"seller_price\":\"20000\",\"admin_cost_id\":null,\"admin_cost\":0,\"sub_category_id\":\"1\",\"updated_at\":\"2026-01-28T06:49:32.000000Z\",\"created_at\":\"2026-01-28T06:49:32.000000Z\",\"id\":164}', 164, '2026-01-28 06:49:32', '2026-01-28 06:49:32'),
-(118, 45, 'Approve', '{\"id\":164,\"admin_cost_id\":null,\"seller_id\":24,\"code\":\"digitalreez\",\"name\":\"digital reeza\",\"type_id\":3,\"category_id\":1,\"sub_category_id\":1,\"unit_id\":1,\"weight\":0,\"stock\":10,\"price\":20000,\"seller_price\":20000,\"admin_cost\":0,\"slug\":\"digital-reeza-2601281349\",\"digitals\":\"a:1:{i:0;a:1:{s:4:\\\"name\\\";s:45:\\\"1-6265_digital reeza267_1769582972_726305.png\\\";}}\",\"subtimes\":\"a:2:{i:0;a:3:{s:7:\\\"subtime\\\";s:7:\\\"1 bulan\\\";s:8:\\\"subprice\\\";i:15000;s:14:\\\"subsellerprice\\\";i:15000;}i:1;a:3:{s:7:\\\"subtime\\\";s:7:\\\"2 bulan\\\";s:8:\\\"subprice\\\";i:25000;s:14:\\\"subsellerprice\\\";i:25000;}}\",\"file_1\":null,\"file_2\":null,\"file_3\":null,\"file_4\":null,\"image_1\":\"6265_digital reeza437_1769582972_614693.png\",\"image_2\":null,\"image_3\":null,\"image_4\":null,\"description\":\"ini adalh test produk digital\",\"note\":null,\"status\":2,\"total_sells\":null,\"created_at\":\"2026-01-28T06:49:32.000000Z\",\"updated_at\":\"2026-01-28T06:55:39.000000Z\",\"seller\":{\"id\":24,\"username\":\"tokonoken\",\"name\":\"toko noken\",\"email\":\"tokonoken@gmail.com\",\"tax_number\":\"99762728188118\",\"business_number\":\"081248419335\",\"phone\":\"081248419335\",\"address\":\"jln pendidikan\",\"city\":\"merauke\",\"province\":\"papua selatan\",\"country\":\"indonesia\",\"zip\":\"99616\",\"status\":4,\"note\":null,\"user_id\":34,\"created_at\":\"2025-11-04T06:14:37.000000Z\",\"updated_at\":\"2025-11-04T06:17:48.000000Z\",\"bank_name\":null,\"bank_account_name\":null,\"bank_account_number\":null,\"bank_code\":null}}', 164, '2026-01-28 06:55:39', '2026-01-28 06:55:39'),
-(119, 1, 'Disable', '{\"id\":1,\"admin_cost_id\":null,\"seller_id\":1,\"code\":\"YUZK2DAHKN\",\"name\":\"Aksesoris Etnik\",\"type_id\":0,\"category_id\":2,\"sub_category_id\":null,\"unit_id\":1,\"weight\":0,\"stock\":32,\"price\":238121,\"seller_price\":238121,\"admin_cost\":0,\"slug\":\"aksesoris-etnik\",\"digitals\":null,\"subtimes\":null,\"file_1\":\"\",\"file_2\":null,\"file_3\":null,\"file_4\":null,\"image_1\":\"aksesoris-etnik.jpg\",\"image_2\":null,\"image_3\":null,\"image_4\":null,\"description\":\"Gelang, kalung, dan anting handmade dengan sentuhan budaya nusantara.\",\"note\":null,\"status\":0,\"total_sells\":null,\"created_at\":\"2025-03-30T19:23:47.000000Z\",\"updated_at\":\"2026-01-30T11:52:48.000000Z\"}', 1, '2026-01-30 11:52:48', '2026-01-30 11:52:48'),
-(120, 1, 'Enable', '{\"id\":1,\"admin_cost_id\":null,\"seller_id\":1,\"code\":\"YUZK2DAHKN\",\"name\":\"Aksesoris Etnik\",\"type_id\":0,\"category_id\":2,\"sub_category_id\":null,\"unit_id\":1,\"weight\":0,\"stock\":32,\"price\":238121,\"seller_price\":238121,\"admin_cost\":0,\"slug\":\"aksesoris-etnik\",\"digitals\":null,\"subtimes\":null,\"file_1\":\"\",\"file_2\":null,\"file_3\":null,\"file_4\":null,\"image_1\":\"aksesoris-etnik.jpg\",\"image_2\":null,\"image_3\":null,\"image_4\":null,\"description\":\"Gelang, kalung, dan anting handmade dengan sentuhan budaya nusantara.\",\"note\":null,\"status\":2,\"total_sells\":null,\"created_at\":\"2025-03-30T19:23:47.000000Z\",\"updated_at\":\"2026-01-30T11:52:53.000000Z\"}', 1, '2026-01-30 11:52:53', '2026-01-30 11:52:53');
+(118, 45, 'Approve', '{\"id\":164,\"admin_cost_id\":null,\"seller_id\":24,\"code\":\"digitalreez\",\"name\":\"digital reeza\",\"type_id\":3,\"category_id\":1,\"sub_category_id\":1,\"unit_id\":1,\"weight\":0,\"stock\":10,\"price\":20000,\"seller_price\":20000,\"admin_cost\":0,\"slug\":\"digital-reeza-2601281349\",\"digitals\":\"a:1:{i:0;a:1:{s:4:\\\"name\\\";s:45:\\\"1-6265_digital reeza267_1769582972_726305.png\\\";}}\",\"subtimes\":\"a:2:{i:0;a:3:{s:7:\\\"subtime\\\";s:7:\\\"1 bulan\\\";s:8:\\\"subprice\\\";i:15000;s:14:\\\"subsellerprice\\\";i:15000;}i:1;a:3:{s:7:\\\"subtime\\\";s:7:\\\"2 bulan\\\";s:8:\\\"subprice\\\";i:25000;s:14:\\\"subsellerprice\\\";i:25000;}}\",\"file_1\":null,\"file_2\":null,\"file_3\":null,\"file_4\":null,\"image_1\":\"6265_digital reeza437_1769582972_614693.png\",\"image_2\":null,\"image_3\":null,\"image_4\":null,\"description\":\"ini adalh test produk digital\",\"note\":null,\"status\":2,\"total_sells\":null,\"created_at\":\"2026-01-28T06:49:32.000000Z\",\"updated_at\":\"2026-01-28T06:55:39.000000Z\",\"seller\":{\"id\":24,\"username\":\"tokonoken\",\"name\":\"toko noken\",\"email\":\"tokonoken@gmail.com\",\"tax_number\":\"99762728188118\",\"business_number\":\"081248419335\",\"phone\":\"081248419335\",\"address\":\"jln pendidikan\",\"city\":\"merauke\",\"province\":\"papua selatan\",\"country\":\"indonesia\",\"zip\":\"99616\",\"status\":4,\"note\":null,\"user_id\":34,\"created_at\":\"2025-11-04T06:14:37.000000Z\",\"updated_at\":\"2025-11-04T06:17:48.000000Z\",\"bank_name\":null,\"bank_account_name\":null,\"bank_account_number\":null,\"bank_code\":null}}', 164, '2026-01-28 06:55:39', '2026-01-28 06:55:39');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `provinces`
+-- Table structure for table `provinces`
 --
 
-CREATE TABLE `provinces` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
+DROP TABLE IF EXISTS `provinces`;
+CREATE TABLE IF NOT EXISTS `provinces` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `provinces`
+-- Dumping data for table `provinces`
 --
 
 INSERT INTO `provinces` (`id`, `name`, `created_at`, `updated_at`) VALUES
@@ -7153,19 +7236,22 @@ INSERT INTO `provinces` (`id`, `name`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `roles`
+-- Table structure for table `roles`
 --
 
-CREATE TABLE `roles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `guard_name` varchar(255) NOT NULL,
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
@@ -7173,21 +7259,25 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 (2, 'admin', 'admin', '2025-03-30 19:23:41', '2025-03-30 19:23:41'),
 (3, 'customer', 'customer', '2025-03-30 19:23:41', '2025-03-30 19:23:41'),
 (4, 'seller', 'seller', '2025-03-30 19:23:41', '2025-03-30 19:23:41'),
-(5, 'admin register', 'admin', '2026-01-30 16:13:20', '2026-01-30 16:13:20');
+(5, 'admin register skpd', 'admin', '2026-01-27 15:44:08', NULL),
+(6, 'admin testing', 'admin', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `role_has_permissions`
+-- Table structure for table `role_has_permissions`
 --
 
-CREATE TABLE `role_has_permissions` (
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL
+DROP TABLE IF EXISTS `role_has_permissions`;
+CREATE TABLE IF NOT EXISTS `role_has_permissions` (
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`permission_id`,`role_id`),
+  KEY `role_has_permissions_role_id_foreign` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `role_has_permissions`
+-- Dumping data for table `role_has_permissions`
 --
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
@@ -7196,88 +7286,92 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sellers`
+-- Table structure for table `sellers`
 --
 
-CREATE TABLE `sellers` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(255) DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `oap` enum('yes','no') NOT NULL DEFAULT 'no',
-  `profile_picture` varchar(255) DEFAULT NULL,
-  `profile_dokumen` varchar(255) DEFAULT NULL,
-  `tax_number` varchar(255) DEFAULT NULL,
-  `business_number` varchar(255) DEFAULT NULL,
-  `phone` varchar(14) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,
-  `zip` varchar(10) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `note` text DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL,
+DROP TABLE IF EXISTS `sellers`;
+CREATE TABLE IF NOT EXISTS `sellers` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `oap` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no',
+  `profile_picture` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `profile_dokumen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tax_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `business_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zip` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `user_id` bigint DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `bank_name` varchar(255) DEFAULT NULL,
-  `bank_account_name` varchar(255) DEFAULT NULL,
-  `bank_account_number` varchar(255) DEFAULT NULL,
-  `bank_code` varchar(255) DEFAULT NULL,
-  `binaan_skpd` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_account_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_account_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bank_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sellers_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `sellers`
+-- Dumping data for table `sellers`
 --
 
-INSERT INTO `sellers` (`id`, `username`, `name`, `email`, `oap`, `profile_picture`, `profile_dokumen`, `tax_number`, `business_number`, `phone`, `address`, `city`, `province`, `country`, `zip`, `status`, `note`, `user_id`, `created_at`, `updated_at`, `bank_name`, `bank_account_name`, `bank_account_number`, `bank_code`, `binaan_skpd`) VALUES
-(1, 'eprakasa', 'PD Fujiati Salahudin', 'rika90@example.net', 'yes', NULL, NULL, NULL, NULL, '081061069516', 'Gg. Rumah Sakit No. 355, Malang 53028, Sumsel', 'Cimahi', 'Sulawesi Utara', 'Indonesia', '20317', 4, NULL, 3, '2025-03-30 19:23:47', '2026-01-30 15:51:21', NULL, NULL, NULL, NULL, 0),
-(2, 'jrajasa', 'PD Prasetyo (Persero) Tbk', 'spurwanti@example.org', 'no', NULL, NULL, NULL, NULL, '088020912111', 'Jln. Bayan No. 889, Bekasi 80868, Sulbar', 'Jambi', 'Kalimantan Utara', 'Indonesia', '29997', 4, NULL, 4, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(3, 'utami.puti', 'Yayasan Hassanah Sitorus Tbk', 'kairav91@example.net', 'no', NULL, NULL, NULL, NULL, '084531978800', 'Kpg. Taman No. 651, Parepare 41168, Babel', 'Lhokseumawe', 'Kepulauan Bangka Belitung', 'Indonesia', '75335', 4, NULL, 5, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(4, 'raharja03', 'Fa Narpati Tbk', 'znurdiyanti@example.com', 'no', NULL, NULL, NULL, NULL, '082756585864', 'Ki. Fajar No. 681, Samarinda 39588, NTT', 'Tual', 'Nusa Tenggara Barat', 'Indonesia', '81547', 4, NULL, 6, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(5, 'bagya52', 'UD Wibowo Mustofa (Persero) Tbk', 'hardana08@example.com', 'no', NULL, NULL, NULL, NULL, '089736465428', 'Kpg. Jagakarsa No. 352, Ternate 29489, Sumbar', 'Tomohon', 'Maluku Utara', 'Indonesia', '85620', 4, NULL, 7, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(6, 'gpudjiastuti', 'PJ Sihombing', 'wibisono.ajiman@example.net', 'no', NULL, NULL, NULL, NULL, '086262696896', 'Ki. Balikpapan No. 407, Pematangsiantar 63592, DIY', 'Ternate', 'Banten', 'Indonesia', '30420', 4, NULL, 8, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(7, 'setya34', 'PJ Maheswara Widiastuti (Persero) Tbk', 'atma49@example.com', 'no', NULL, NULL, NULL, NULL, '085154356912', 'Gg. Zamrud No. 685, Malang 37061, Kepri', 'Parepare', 'Kepulauan Riau', 'Indonesia', '46629', 4, NULL, 9, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(8, 'hastuti.darman', 'Yayasan Usamah Prasasta', 'prabowo.karma@example.com', 'no', NULL, NULL, NULL, NULL, '088260082831', 'Jr. Gajah Mada No. 833, Pontianak 79236, Sumut', 'Palu', 'Gorontalo', 'Indonesia', '30569', 4, NULL, 10, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(9, 'hidayat.hasna', 'Yayasan Hassanah Manullang Tbk', 'wakiman.novitasari@example.com', 'no', NULL, NULL, NULL, NULL, '081259008113', 'Kpg. Adisucipto No. 185, Pariaman 72763, DIY', 'Jambi', 'Kepulauan Riau', 'Indonesia', '60087', 4, NULL, 11, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(10, 'suci.farida', 'Fa Tamba (Persero) Tbk', 'azalea32@example.net', 'no', NULL, NULL, NULL, NULL, '086890082978', 'Jln. Basoka No. 225, Jayapura 17288, Bengkulu', 'Sorong', 'Nusa Tenggara Barat', 'Indonesia', '28490', 4, NULL, 12, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(11, 'nhidayanto', 'UD Laksmiwati Pratiwi Tbk', 'pprasetya@example.net', 'no', NULL, NULL, NULL, NULL, '088389298302', 'Dk. Kebonjati No. 287, Sawahlunto 20998, Aceh', 'Tebing Tinggi', 'Gorontalo', 'Indonesia', '11781', 4, NULL, 13, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(12, 'maimunah.hakim', 'Perum Farida', 'haryanto.jarwi@example.com', 'no', NULL, NULL, NULL, NULL, '086964407132', 'Kpg. Bappenas No. 989, Sabang 16021, Banten', 'Dumai', 'Kalimantan Timur', 'Indonesia', '87847', 4, NULL, 14, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(13, 'devi51', 'Fa Aryani Suartini', 'osetiawan@example.com', 'no', NULL, NULL, NULL, NULL, '083170222480', 'Jr. R.E. Martadinata No. 896, Banjarmasin 40273, Lampung', 'Tarakan', 'Jambi', 'Indonesia', '26360', 4, NULL, 15, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(14, 'lthamrin', 'CV Zulaika Wahyuni', 'yhalim@example.net', 'no', NULL, NULL, NULL, NULL, '080491440203', 'Ds. Madrasah No. 458, Denpasar 70875, Kaltim', 'Tomohon', 'Maluku', 'Indonesia', '88657', 4, NULL, 16, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(15, 'olivia.wastuti', 'UD Novitasari Zulaika', 'nmansur@example.org', 'no', NULL, NULL, NULL, NULL, '084635602957', 'Ki. Jakarta No. 237, Padangpanjang 40321, Kaltim', 'Banjarbaru', 'Kepulauan Bangka Belitung', 'Indonesia', '35459', 4, NULL, 17, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(16, 'prasasta.lembah', 'UD Mardhiyah Tarihoran', 'salimah.jailani@example.net', 'no', NULL, NULL, NULL, NULL, '088416622235', 'Ds. Raden Saleh No. 994, Kotamobagu 60809, Sumbar', 'Bontang', 'Sulawesi Barat', 'Indonesia', '91432', 4, NULL, 18, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(17, 'mutia.yulianti', 'PD Hasanah Novitasari (Persero) Tbk', 'michelle.purnawati@example.com', 'no', NULL, NULL, NULL, NULL, '085213812919', 'Kpg. Wahid No. 681, Ternate 80986, NTB', 'Prabumulih', 'Sulawesi Tengah', 'Indonesia', '72257', 4, NULL, 19, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(18, 'ophelia32', 'Yayasan Wahyuni Safitri Tbk', 'yulianti.irfan@example.org', 'no', NULL, NULL, NULL, NULL, '083135741262', 'Psr. Yos Sudarso No. 459, Salatiga 25857, Kalbar', 'Palangka Raya', 'Jawa Timur', 'Indonesia', '28604', 4, NULL, 20, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(19, 'mfarida', 'UD Widiastuti Iswahyudi', 'hesti46@example.com', 'no', NULL, NULL, NULL, NULL, '089646055867', 'Ds. Gambang No. 526, Cimahi 97735, Sulbar', 'Administrasi Jakarta Pusat', 'Sumatera Selatan', 'Indonesia', '16484', 4, NULL, 21, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL, 0),
-(21, 'seller', 'seller', 'seller@gmail.com', 'no', NULL, NULL, '1111111', '111111', '85869101484', 'Gondang Sari, Jlarem, Gladagsari, Boyolali, RT01, RW03', 'Kabupaten Boyolali', 'Central Java', 'Indonesia', '57352', 4, NULL, 22, '2025-03-30 19:25:23', '2025-03-30 19:37:14', NULL, NULL, NULL, NULL, 0),
-(22, 'seler1', 'xion', 'seler1@gmail.com', 'no', NULL, NULL, '99616', '081248419336', '81248419335', 'jln pendidikan', 'merauke', 'papua selatan', 'indonesia', '99616', 4, NULL, 25, '2025-04-03 08:40:03', '2026-01-30 14:28:07', NULL, NULL, NULL, NULL, 0),
-(24, 'tokonoken', 'toko noken', 'tokonoken@gmail.com', 'no', NULL, NULL, '99762728188118', '081248419335', '081248419335', 'jln pendidikan', 'merauke', 'papua selatan', 'indonesia', '99616', 4, NULL, 34, '2025-11-04 06:14:37', '2025-11-04 06:17:48', NULL, NULL, NULL, NULL, 0),
-(25, 'ramalaura@gmail.com', 'reeza', 'ramalaura@gmail.com', 'no', NULL, NULL, '535135135', '082113498393', '082113498393', 'Jakarta', 'jakarta', 'jakarta', 'Indonesia', '10230', 1, NULL, 36, '2025-12-09 11:53:10', '2026-01-30 16:29:52', NULL, NULL, NULL, NULL, 1),
-(26, 'ananarlia123', 'reeza', 'ananarlia123@gmail.com', 'no', NULL, NULL, '26264246', '082113498393', '082113498393', 'Jakarta', 'jakarta', 'jakarta', 'Indonesia', '10230', 1, NULL, 37, '2025-12-09 11:54:56', '2025-12-09 11:54:56', NULL, NULL, NULL, NULL, 0),
-(28, 'fajar', 'fajar', 'fajarxakmal@gmail.com', 'yes', 'seller/DPMLyRW4JksY968k9OENqO4VXsD03iVuu4TLjY74.png', 'seller/L3Q7OF6rPjmdjngOHCQS4Bj6t3Ri5yPxAVSZD4BK.pdf', '263236263', '23626362', '8560318363', 'dhbhsd', 'subang', 'jawabarat', 'indonesia', '41213', 1, NULL, 49, '2026-01-30 15:13:29', '2026-01-30 15:13:30', NULL, NULL, NULL, NULL, 0),
-(29, 'fajara', 'fajara', 'fjrxakmall@gmail.com', 'yes', 'seller/EopgVu5nfQNI9UCcLBTwNnpWrb4XBuJKyJFqH1r2.png', 'seller/aF9B9FxA08MgFdBQifNVPa8EMjPqbqTOGyl6NR4p.pdf', '283782737', '2372738', '85603816353', 'hshsdh', 'subang', 'jawa barat', 'undefined', '41213', 1, NULL, 50, '2026-01-30 15:36:45', '2026-01-30 16:36:56', NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sellers` (`id`, `username`, `name`, `email`, `oap`, `profile_picture`, `tax_number`, `business_number`, `phone`, `address`, `city`, `province`, `country`, `zip`, `status`, `note`, `user_id`, `created_at`, `updated_at`, `bank_name`, `bank_account_name`, `bank_account_number`, `bank_code`) VALUES
+(1, 'eprakasa', 'PD Fujiati Salahudin', 'rika90@example.net', 'no', NULL, NULL, NULL, '081061069516', 'Gg. Rumah Sakit No. 355, Malang 53028, Sumsel', 'Cimahi', 'Sulawesi Utara', 'Indonesia', '20317', 4, NULL, 3, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(2, 'jrajasa', 'PD Prasetyo (Persero) Tbk', 'spurwanti@example.org', 'no', NULL, NULL, NULL, '088020912111', 'Jln. Bayan No. 889, Bekasi 80868, Sulbar', 'Jambi', 'Kalimantan Utara', 'Indonesia', '29997', 4, NULL, 4, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(3, 'utami.puti', 'Yayasan Hassanah Sitorus Tbk', 'kairav91@example.net', 'no', NULL, NULL, NULL, '084531978800', 'Kpg. Taman No. 651, Parepare 41168, Babel', 'Lhokseumawe', 'Kepulauan Bangka Belitung', 'Indonesia', '75335', 4, NULL, 5, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(4, 'raharja03', 'Fa Narpati Tbk', 'znurdiyanti@example.com', 'no', NULL, NULL, NULL, '082756585864', 'Ki. Fajar No. 681, Samarinda 39588, NTT', 'Tual', 'Nusa Tenggara Barat', 'Indonesia', '81547', 4, NULL, 6, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(5, 'bagya52', 'UD Wibowo Mustofa (Persero) Tbk', 'hardana08@example.com', 'no', NULL, NULL, NULL, '089736465428', 'Kpg. Jagakarsa No. 352, Ternate 29489, Sumbar', 'Tomohon', 'Maluku Utara', 'Indonesia', '85620', 4, NULL, 7, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(6, 'gpudjiastuti', 'PJ Sihombing', 'wibisono.ajiman@example.net', 'no', NULL, NULL, NULL, '086262696896', 'Ki. Balikpapan No. 407, Pematangsiantar 63592, DIY', 'Ternate', 'Banten', 'Indonesia', '30420', 4, NULL, 8, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(7, 'setya34', 'PJ Maheswara Widiastuti (Persero) Tbk', 'atma49@example.com', 'no', NULL, NULL, NULL, '085154356912', 'Gg. Zamrud No. 685, Malang 37061, Kepri', 'Parepare', 'Kepulauan Riau', 'Indonesia', '46629', 4, NULL, 9, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(8, 'hastuti.darman', 'Yayasan Usamah Prasasta', 'prabowo.karma@example.com', 'no', NULL, NULL, NULL, '088260082831', 'Jr. Gajah Mada No. 833, Pontianak 79236, Sumut', 'Palu', 'Gorontalo', 'Indonesia', '30569', 4, NULL, 10, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(9, 'hidayat.hasna', 'Yayasan Hassanah Manullang Tbk', 'wakiman.novitasari@example.com', 'no', NULL, NULL, NULL, '081259008113', 'Kpg. Adisucipto No. 185, Pariaman 72763, DIY', 'Jambi', 'Kepulauan Riau', 'Indonesia', '60087', 4, NULL, 11, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(10, 'suci.farida', 'Fa Tamba (Persero) Tbk', 'azalea32@example.net', 'no', NULL, NULL, NULL, '086890082978', 'Jln. Basoka No. 225, Jayapura 17288, Bengkulu', 'Sorong', 'Nusa Tenggara Barat', 'Indonesia', '28490', 4, NULL, 12, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(11, 'nhidayanto', 'UD Laksmiwati Pratiwi Tbk', 'pprasetya@example.net', 'no', NULL, NULL, NULL, '088389298302', 'Dk. Kebonjati No. 287, Sawahlunto 20998, Aceh', 'Tebing Tinggi', 'Gorontalo', 'Indonesia', '11781', 4, NULL, 13, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(12, 'maimunah.hakim', 'Perum Farida', 'haryanto.jarwi@example.com', 'no', NULL, NULL, NULL, '086964407132', 'Kpg. Bappenas No. 989, Sabang 16021, Banten', 'Dumai', 'Kalimantan Timur', 'Indonesia', '87847', 4, NULL, 14, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(13, 'devi51', 'Fa Aryani Suartini', 'osetiawan@example.com', 'no', NULL, NULL, NULL, '083170222480', 'Jr. R.E. Martadinata No. 896, Banjarmasin 40273, Lampung', 'Tarakan', 'Jambi', 'Indonesia', '26360', 4, NULL, 15, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(14, 'lthamrin', 'CV Zulaika Wahyuni', 'yhalim@example.net', 'no', NULL, NULL, NULL, '080491440203', 'Ds. Madrasah No. 458, Denpasar 70875, Kaltim', 'Tomohon', 'Maluku', 'Indonesia', '88657', 4, NULL, 16, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(15, 'olivia.wastuti', 'UD Novitasari Zulaika', 'nmansur@example.org', 'no', NULL, NULL, NULL, '084635602957', 'Ki. Jakarta No. 237, Padangpanjang 40321, Kaltim', 'Banjarbaru', 'Kepulauan Bangka Belitung', 'Indonesia', '35459', 4, NULL, 17, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(16, 'prasasta.lembah', 'UD Mardhiyah Tarihoran', 'salimah.jailani@example.net', 'no', NULL, NULL, NULL, '088416622235', 'Ds. Raden Saleh No. 994, Kotamobagu 60809, Sumbar', 'Bontang', 'Sulawesi Barat', 'Indonesia', '91432', 4, NULL, 18, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(17, 'mutia.yulianti', 'PD Hasanah Novitasari (Persero) Tbk', 'michelle.purnawati@example.com', 'no', NULL, NULL, NULL, '085213812919', 'Kpg. Wahid No. 681, Ternate 80986, NTB', 'Prabumulih', 'Sulawesi Tengah', 'Indonesia', '72257', 4, NULL, 19, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(18, 'ophelia32', 'Yayasan Wahyuni Safitri Tbk', 'yulianti.irfan@example.org', 'no', NULL, NULL, NULL, '083135741262', 'Psr. Yos Sudarso No. 459, Salatiga 25857, Kalbar', 'Palangka Raya', 'Jawa Timur', 'Indonesia', '28604', 4, NULL, 20, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(19, 'mfarida', 'UD Widiastuti Iswahyudi', 'hesti46@example.com', 'no', NULL, NULL, NULL, '089646055867', 'Ds. Gambang No. 526, Cimahi 97735, Sulbar', 'Administrasi Jakarta Pusat', 'Sumatera Selatan', 'Indonesia', '16484', 4, NULL, 21, '2025-03-30 19:23:47', '2025-03-30 19:23:47', NULL, NULL, NULL, NULL),
+(21, 'seller', 'seller', 'seller@gmail.com', 'no', NULL, '1111111', '111111', '85869101484', 'Gondang Sari, Jlarem, Gladagsari, Boyolali, RT01, RW03', 'Kabupaten Boyolali', 'Central Java', 'Indonesia', '57352', 4, NULL, 22, '2025-03-30 19:25:23', '2025-03-30 19:37:14', NULL, NULL, NULL, NULL),
+(22, 'seler1', 'xion', 'seler1@gmail.com', 'no', NULL, '99616', '081248419336', '81248419335', 'jln pendidikan', 'merauke', 'papua selatan', 'indonesia', '99616', 4, NULL, 25, '2025-04-03 08:40:03', '2025-04-03 08:44:25', NULL, NULL, NULL, NULL),
+(24, 'tokonoken', 'toko noken', 'tokonoken@gmail.com', 'no', NULL, '99762728188118', '081248419335', '081248419335', 'jln pendidikan', 'merauke', 'papua selatan', 'indonesia', '99616', 4, NULL, 34, '2025-11-04 06:14:37', '2025-11-04 06:17:48', NULL, NULL, NULL, NULL),
+(25, 'ramalaura@gmail.com', 'reeza', 'ramalaura@gmail.com', 'no', NULL, '535135135', '082113498393', '082113498393', 'Jakarta', 'jakarta', 'jakarta', 'Indonesia', '10230', 1, NULL, 36, '2025-12-09 11:53:10', '2025-12-09 11:53:10', NULL, NULL, NULL, NULL),
+(26, 'ananarlia123', 'reeza', 'ananarlia123@gmail.com', 'no', NULL, '26264246', '082113498393', '082113498393', 'Jakarta', 'jakarta', 'jakarta', 'Indonesia', '10230', 1, NULL, 37, '2025-12-09 11:54:56', '2025-12-09 11:54:56', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `seller_balances`
+-- Table structure for table `seller_balances`
 --
 
-CREATE TABLE `seller_balances` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `seller_id` bigint(20) NOT NULL,
-  `transaction_id` bigint(20) DEFAULT NULL,
-  `withdraw_id` bigint(20) DEFAULT NULL,
+DROP TABLE IF EXISTS `seller_balances`;
+CREATE TABLE IF NOT EXISTS `seller_balances` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `seller_id` bigint NOT NULL,
+  `transaction_id` bigint DEFAULT NULL,
+  `withdraw_id` bigint DEFAULT NULL,
   `amount` double NOT NULL,
-  `type` enum('in','out') NOT NULL,
+  `type` enum('in','out') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `seller_balances_transaction_id_unique` (`transaction_id`),
+  UNIQUE KEY `seller_balances_withdraw_id_unique` (`withdraw_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `seller_balances`
+-- Dumping data for table `seller_balances`
 --
 
 INSERT INTO `seller_balances` (`id`, `seller_id`, `transaction_id`, `withdraw_id`, `amount`, `type`, `created_at`, `updated_at`) VALUES
@@ -7286,63 +7380,49 @@ INSERT INTO `seller_balances` (`id`, `seller_id`, `transaction_id`, `withdraw_id
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `seller_banners`
+-- Table structure for table `seller_banners`
 --
 
-CREATE TABLE `seller_banners` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `seller_id` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `image` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `seller_banners`;
+CREATE TABLE IF NOT EXISTS `seller_banners` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `seller_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `seller_coachings`
+-- Table structure for table `seller_withdraws`
 --
 
-CREATE TABLE `seller_coachings` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `seller_id` bigint(20) UNSIGNED NOT NULL,
-  `type` enum('pelatihan','bantuan','pendampingan_kur','lainnya') NOT NULL DEFAULT 'pelatihan',
-  `title` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
-  `coaching_date` date DEFAULT NULL,
-  `attachment` varchar(255) DEFAULT NULL,
-  `created_by` bigint(20) UNSIGNED DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `seller_withdraws`
---
-
-CREATE TABLE `seller_withdraws` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `seller_id` bigint(20) NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `note` text DEFAULT NULL,
+DROP TABLE IF EXISTS `seller_withdraws`;
+CREATE TABLE IF NOT EXISTS `seller_withdraws` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `seller_id` bigint NOT NULL,
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `amount` double NOT NULL,
   `success_at` datetime DEFAULT NULL,
-  `approval_by` bigint(20) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `note_reject` text DEFAULT NULL,
+  `approval_by` bigint DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1',
+  `note_reject` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `seller_withdraws_code_unique` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `seller_withdraws`
+-- Dumping data for table `seller_withdraws`
 --
 
 INSERT INTO `seller_withdraws` (`id`, `seller_id`, `code`, `note`, `amount`, `success_at`, `approval_by`, `image`, `status`, `note_reject`, `created_at`, `updated_at`) VALUES
@@ -7351,22 +7431,24 @@ INSERT INTO `seller_withdraws` (`id`, `seller_id`, `code`, `note`, `amount`, `su
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_about_us`
+-- Table structure for table `setting_about_us`
 --
 
-CREATE TABLE `setting_about_us` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `key` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `subtitle` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `is_deleteable` tinyint(1) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `setting_about_us`;
+CREATE TABLE IF NOT EXISTS `setting_about_us` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtitle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_deleteable` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_about_us`
+-- Dumping data for table `setting_about_us`
 --
 
 INSERT INTO `setting_about_us` (`id`, `key`, `title`, `subtitle`, `image`, `is_deleteable`, `created_at`, `updated_at`) VALUES
@@ -7380,23 +7462,26 @@ INSERT INTO `setting_about_us` (`id`, `key`, `title`, `subtitle`, `image`, `is_d
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_categories`
+-- Table structure for table `setting_categories`
 --
 
-CREATE TABLE `setting_categories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `label` varchar(50) NOT NULL DEFAULT 'okedeh',
-  `code` varchar(10) NOT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `name` varchar(100) NOT NULL,
-  `image` varchar(20) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `setting_categories`;
+CREATE TABLE IF NOT EXISTS `setting_categories` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `label` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'okedeh',
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `setting_categories_code_unique` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_categories`
+-- Dumping data for table `setting_categories`
 --
 
 INSERT INTO `setting_categories` (`id`, `label`, `code`, `slug`, `name`, `image`, `status`, `created_at`, `updated_at`) VALUES
@@ -7424,21 +7509,24 @@ INSERT INTO `setting_categories` (`id`, `label`, `code`, `slug`, `name`, `image`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_category_logs`
+-- Table structure for table `setting_category_logs`
 --
 
-CREATE TABLE `setting_category_logs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `activity` varchar(50) NOT NULL,
-  `note` text DEFAULT NULL,
-  `setting_category_id` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `setting_category_logs`;
+CREATE TABLE IF NOT EXISTS `setting_category_logs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `activity` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `setting_category_id` bigint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `setting_category_logs_setting_category_id_user_id_index` (`setting_category_id`,`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_category_logs`
+-- Dumping data for table `setting_category_logs`
 --
 
 INSERT INTO `setting_category_logs` (`id`, `user_id`, `activity`, `note`, `setting_category_id`, `created_at`, `updated_at`) VALUES
@@ -7482,20 +7570,22 @@ INSERT INTO `setting_category_logs` (`id`, `user_id`, `activity`, `note`, `setti
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_contact_admins`
+-- Table structure for table `setting_contact_admins`
 --
 
-CREATE TABLE `setting_contact_admins` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `key` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `contact` varchar(255) NOT NULL,
+DROP TABLE IF EXISTS `setting_contact_admins`;
+CREATE TABLE IF NOT EXISTS `setting_contact_admins` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_contact_admins`
+-- Dumping data for table `setting_contact_admins`
 --
 
 INSERT INTO `setting_contact_admins` (`id`, `key`, `name`, `contact`, `created_at`, `updated_at`) VALUES
@@ -7504,22 +7594,24 @@ INSERT INTO `setting_contact_admins` (`id`, `key`, `name`, `contact`, `created_a
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_costs`
+-- Table structure for table `setting_costs`
 --
 
-CREATE TABLE `setting_costs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `min_price` int(11) NOT NULL,
-  `max_price` int(11) NOT NULL,
-  `cost_value` int(11) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `setting_costs`;
+CREATE TABLE IF NOT EXISTS `setting_costs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `min_price` int NOT NULL,
+  `max_price` int NOT NULL,
+  `cost_value` int NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_costs`
+-- Dumping data for table `setting_costs`
 --
 
 INSERT INTO `setting_costs` (`id`, `min_price`, `max_price`, `cost_value`, `description`, `status`, `created_at`, `updated_at`) VALUES
@@ -7528,18 +7620,20 @@ INSERT INTO `setting_costs` (`id`, `min_price`, `max_price`, `cost_value`, `desc
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_information_bars`
+-- Table structure for table `setting_information_bars`
 --
 
-CREATE TABLE `setting_information_bars` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `text` varchar(255) DEFAULT NULL,
+DROP TABLE IF EXISTS `setting_information_bars`;
+CREATE TABLE IF NOT EXISTS `setting_information_bars` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_information_bars`
+-- Dumping data for table `setting_information_bars`
 --
 
 INSERT INTO `setting_information_bars` (`id`, `text`, `created_at`, `updated_at`) VALUES
@@ -7548,23 +7642,25 @@ INSERT INTO `setting_information_bars` (`id`, `text`, `created_at`, `updated_at`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_sub_categories`
+-- Table structure for table `setting_sub_categories`
 --
 
-CREATE TABLE `setting_sub_categories` (
-  `id` bigint(20) NOT NULL,
-  `setting_category_id` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `setting_sub_categories`;
+CREATE TABLE IF NOT EXISTS `setting_sub_categories` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `setting_category_id` bigint NOT NULL,
   `code` varchar(15) NOT NULL,
   `slug` varchar(255) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `image` varchar(100) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_sub_categories`
+-- Dumping data for table `setting_sub_categories`
 --
 
 INSERT INTO `setting_sub_categories` (`id`, `setting_category_id`, `code`, `slug`, `name`, `image`, `status`, `created_at`, `updated_at`) VALUES
@@ -7574,20 +7670,22 @@ INSERT INTO `setting_sub_categories` (`id`, `setting_category_id`, `code`, `slug
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_types`
+-- Table structure for table `setting_types`
 --
 
-CREATE TABLE `setting_types` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `setting_types`;
+CREATE TABLE IF NOT EXISTS `setting_types` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `status` tinyint NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_types`
+-- Dumping data for table `setting_types`
 --
 
 INSERT INTO `setting_types` (`id`, `name`, `description`, `status`, `created_at`, `updated_at`) VALUES
@@ -7598,20 +7696,23 @@ INSERT INTO `setting_types` (`id`, `name`, `description`, `status`, `created_at`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_units`
+-- Table structure for table `setting_units`
 --
 
-CREATE TABLE `setting_units` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `code` varchar(10) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `setting_units`;
+CREATE TABLE IF NOT EXISTS `setting_units` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `setting_units_code_unique` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `setting_units`
+-- Dumping data for table `setting_units`
 --
 
 INSERT INTO `setting_units` (`id`, `code`, `name`, `status`, `created_at`, `updated_at`) VALUES
@@ -7624,56 +7725,62 @@ INSERT INTO `setting_units` (`id`, `code`, `name`, `status`, `created_at`, `upda
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `setting_unit_logs`
+-- Table structure for table `setting_unit_logs`
 --
 
-CREATE TABLE `setting_unit_logs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `activity` varchar(50) NOT NULL,
-  `note` text DEFAULT NULL,
-  `setting_unit_id` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `setting_unit_logs`;
+CREATE TABLE IF NOT EXISTS `setting_unit_logs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `activity` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `setting_unit_id` bigint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `setting_unit_logs_setting_unit_id_user_id_index` (`setting_unit_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transactions`
+-- Table structure for table `transactions`
 --
 
-CREATE TABLE `transactions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `seller_id` bigint(20) DEFAULT NULL,
-  `customer_id` bigint(20) NOT NULL,
-  `customer_address_id` bigint(20) NOT NULL,
-  `code` varchar(50) NOT NULL,
-  `subtotal` bigint(20) NOT NULL DEFAULT 0,
-  `other_cost` bigint(20) NOT NULL DEFAULT 0,
-  `total` bigint(20) NOT NULL DEFAULT 0,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `payment_method` varchar(255) DEFAULT NULL,
-  `payment_channel` varchar(255) DEFAULT NULL,
-  `snap_token` varchar(255) DEFAULT NULL,
-  `shipping_number` varchar(255) DEFAULT NULL,
-  `shipping_information` text DEFAULT NULL,
-  `shipping_cost` double NOT NULL DEFAULT 0,
-  `shipping_name` varchar(255) DEFAULT NULL,
-  `shipping_description` varchar(500) DEFAULT NULL,
-  `shipping_etd` varchar(500) DEFAULT NULL,
-  `shipping_attachment` varchar(255) DEFAULT NULL,
-  `shipping_status` varchar(255) DEFAULT NULL,
-  `shipping_received` enum('yes','no') NOT NULL DEFAULT 'no',
-  `note` text DEFAULT NULL,
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `seller_id` bigint DEFAULT NULL,
+  `customer_id` bigint NOT NULL,
+  `customer_address_id` bigint NOT NULL,
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subtotal` bigint NOT NULL DEFAULT '0',
+  `other_cost` bigint NOT NULL DEFAULT '0',
+  `total` bigint NOT NULL DEFAULT '0',
+  `status` tinyint NOT NULL DEFAULT '0',
+  `payment_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_channel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `snap_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_information` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `shipping_cost` double NOT NULL DEFAULT '0',
+  `shipping_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_etd` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_attachment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_received` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no',
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `can_review_until_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `voucher_id` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `voucher_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `transactions_code_unique` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `transactions`
+-- Dumping data for table `transactions`
 --
 
 INSERT INTO `transactions` (`id`, `seller_id`, `customer_id`, `customer_address_id`, `code`, `subtotal`, `other_cost`, `total`, `status`, `payment_method`, `payment_channel`, `snap_token`, `shipping_number`, `shipping_information`, `shipping_cost`, `shipping_name`, `shipping_description`, `shipping_etd`, `shipping_attachment`, `shipping_status`, `shipping_received`, `note`, `can_review_until_at`, `created_at`, `updated_at`, `voucher_id`) VALUES
@@ -7682,21 +7789,24 @@ INSERT INTO `transactions` (`id`, `seller_id`, `customer_id`, `customer_address_
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaction_logs`
+-- Table structure for table `transaction_logs`
 --
 
-CREATE TABLE `transaction_logs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `transaction_id` bigint(20) UNSIGNED NOT NULL,
-  `activity` varchar(50) NOT NULL,
-  `note` text DEFAULT NULL,
+DROP TABLE IF EXISTS `transaction_logs`;
+CREATE TABLE IF NOT EXISTS `transaction_logs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `transaction_id` bigint UNSIGNED NOT NULL,
+  `activity` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `transaction_logs_transaction_id_foreign` (`transaction_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `transaction_logs`
+-- Dumping data for table `transaction_logs`
 --
 
 INSERT INTO `transaction_logs` (`id`, `user_id`, `transaction_id`, `activity`, `note`, `created_at`, `updated_at`) VALUES
@@ -7708,78 +7818,85 @@ INSERT INTO `transaction_logs` (`id`, `user_id`, `transaction_id`, `activity`, `
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaction_products`
+-- Table structure for table `transaction_products`
 --
 
-CREATE TABLE `transaction_products` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `transaction_id` bigint(20) NOT NULL,
-  `product_id` bigint(20) NOT NULL,
-  `cart_product_type_id` int(11) DEFAULT NULL,
-  `variant` varchar(255) DEFAULT NULL,
-  `price` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `transaction_products`;
+CREATE TABLE IF NOT EXISTS `transaction_products` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `transaction_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `cart_product_type_id` int DEFAULT NULL,
+  `variant` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` bigint NOT NULL,
   `seller_price` double DEFAULT NULL,
   `admin_cost` double DEFAULT NULL,
-  `qty` int(11) NOT NULL,
-  `total` bigint(20) NOT NULL,
-  `review` text DEFAULT NULL,
-  `complain` text DEFAULT NULL,
-  `complain_status` enum('eopn','close') NOT NULL DEFAULT 'close',
-  `complain_note` text DEFAULT NULL,
+  `qty` int NOT NULL,
+  `total` bigint NOT NULL,
+  `review` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `complain` text COLLATE utf8mb4_unicode_ci,
+  `complain_status` enum('eopn','close') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'close',
+  `complain_note` text COLLATE utf8mb4_unicode_ci,
   `complained_at` timestamp NULL DEFAULT NULL,
   `reviewed_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `transaction_products`
+-- Dumping data for table `transaction_products`
 --
 
 INSERT INTO `transaction_products` (`id`, `transaction_id`, `product_id`, `cart_product_type_id`, `variant`, `price`, `seller_price`, `admin_cost`, `qty`, `total`, `review`, `complain`, `complain_status`, `complain_note`, `complained_at`, `reviewed_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 164, 3, '2 bulan', 25000, 20000, 0, 1, 25000, 'barang sampe dengan selamat, lumayan kualiasnya', 'inia dalah komplen ', 'close', 'TAG[pelanggaran] dikembalikan', '2026-01-28 08:08:50', '2026-01-28 08:08:50', '2026-01-28 06:56:29', '2026-01-30 16:14:46');
+(1, 1, 164, 3, '2 bulan', 25000, 20000, 0, 1, 25000, 'barang sampe dengan selamat, lumayan kualiasnya', NULL, 'close', NULL, NULL, '2026-01-28 08:08:50', '2026-01-28 06:56:29', '2026-01-28 06:56:29');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `updated_at`
+-- Table structure for table `updated_at`
 --
 
-CREATE TABLE `updated_at` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `updated_at`;
+CREATE TABLE IF NOT EXISTS `updated_at` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `province_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(14) DEFAULT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` tinyint(4) NOT NULL DEFAULT 3,
-  `admin_priviledge` tinyint(4) DEFAULT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `province_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `verification_code` varchar(255) DEFAULT NULL
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data untuk tabel `users`
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` tinyint NOT NULL DEFAULT '3',
+  `admin_priviledge` tinyint DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `verification_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `password`, `role`, `admin_priviledge`, `remember_token`, `created_at`, `updated_at`, `verification_code`) VALUES
-(1, 'Super Admin', 'admin@olebsai.com', '088888888', NULL, '$2y$12$Omc/3rGnr1Jqol9.I.FOsOgRWcvDN8pmMF.NZ8Ca7ENqIw5ojb/zW', 5, NULL, NULL, '2025-03-30 19:23:41', '2025-03-30 19:23:41', NULL),
+(1, 'Super Admin', 'admin@olebsai.com', '088888888', NULL, '$2y$12$Omc/3rGnr1Jqol9.I.FOsOgRWcvDN8pmMF.NZ8Ca7ENqIw5ojb/zW', 1, NULL, NULL, '2025-03-30 19:23:41', '2025-03-30 19:23:41', NULL),
 (2, 'Vicky Handayani', 'vicky.handayani41@olebsai.com', '086181088624', NULL, '$2y$12$5IfjBQjLmb.n3bQa54mZy.710rZoToAPYpalKjxUlFn/9XolC6hiu', 4, NULL, NULL, '2025-03-30 19:23:42', '2025-03-30 19:23:42', NULL),
 (3, 'Halima Saputra', 'halima.saputra63@olebsai.com', '089609188366', NULL, '$2y$12$5GN42FLL6qJ5A4oy19jVHOmuLjt3tC8jpdaiNZIebMDecFbXfZwPa', 4, NULL, NULL, '2025-03-30 19:23:42', '2025-03-30 19:23:42', NULL),
 (4, 'Juli Permata', 'juli.permata58@olebsai.com', '081301341049', NULL, '$2y$12$PnrM8BUk8svMt3nbu0EZLukC7j6mXaNXsi.vTwWJrJKWSErwluYgO', 4, NULL, NULL, '2025-03-30 19:23:42', '2025-03-30 19:23:42', NULL),
@@ -7816,29 +7933,30 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `passw
 (37, 'reeza', 'ananarlia123@gmail.com', '082113498393', '2025-12-09 11:55:26', '$2y$12$JVgrJzAHJ8ILLeUyYOoJ7.Tk1BX49oFijpYUw0l.Cn7L1Bs4WKG1G', 4, NULL, NULL, '2025-12-09 11:54:56', '2025-12-09 11:55:26', NULL),
 (38, 'freeza', 'terataritore@gmail.com', NULL, '2025-12-09 11:57:24', '$2y$12$UsLMKkBbL5s6mc2QwYzwFeNFJbGviLxGfp8/dmQZ3LpHh.FJ9wpte', 3, NULL, NULL, '2025-12-09 11:57:03', '2025-12-09 11:57:24', NULL),
 (45, 'Super Admin 2', 'admin2@olebsai.com', '0999999999', NULL, '$2y$12$Omc/3rGnr1Jqol9.I.FOsOgRWcvDN8pmMF.NZ8Ca7ENqIw5ojb/zW', 2, 1, NULL, NULL, NULL, NULL),
-(46, 'Super Admin 3', 'admin3@olebsai.com', '0893895895', NULL, '$2y$12$Omc/3rGnr1Jqol9.I.FOsOgRWcvDN8pmMF.NZ8Ca7ENqIw5ojb/zW', 6, NULL, NULL, NULL, NULL, NULL),
-(49, 'fajar', 'fajarxakmal@gmail.com', '8560318363', NULL, '$2y$12$Ovjf8CZw9Br5Ml/HJ/A69es1JTCb40olUSQlZTljxuoRAPFnG2goa', 4, NULL, NULL, '2026-01-30 15:13:30', '2026-01-30 15:13:30', NULL),
-(50, 'fajara', 'fjrxakmall@gmail.com', '85603816353', '2026-01-30 15:38:12', '$2y$12$qgear5/.QHkMKJbYCwg5qejcLqKrjE8Fs4i/4fsnCoZzYFkrG2EGK', 4, NULL, NULL, '2026-01-30 15:36:46', '2026-01-30 15:38:12', NULL);
+(46, 'Super Admin 3', 'admin3@olebsai.com', '0893895895', NULL, '$2y$12$Omc/3rGnr1Jqol9.I.FOsOgRWcvDN8pmMF.NZ8Ca7ENqIw5ojb/zW', 6, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `verification_codes`
+-- Table structure for table `verification_codes`
 --
 
-CREATE TABLE `verification_codes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `type` enum('reset_password','register') NOT NULL,
-  `code` varchar(255) NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  `expired_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+DROP TABLE IF EXISTS `verification_codes`;
+CREATE TABLE IF NOT EXISTS `verification_codes` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` enum('reset_password','register') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `expired_at` timestamp NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `verification_codes_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `verification_codes`
+-- Dumping data for table `verification_codes`
 --
 
 INSERT INTO `verification_codes` (`id`, `type`, `code`, `user_id`, `status`, `expired_at`, `created_at`, `updated_at`) VALUES
@@ -7850,690 +7968,160 @@ INSERT INTO `verification_codes` (`id`, `type`, `code`, `user_id`, `status`, `ex
 (7, 'register', '189740', 35, 1, '2025-11-04 12:09:28', '2025-11-04 12:04:28', '2025-11-04 12:05:01'),
 (8, 'register', '494393', 36, 0, '2025-12-09 11:58:10', '2025-12-09 11:53:10', '2025-12-09 11:53:10'),
 (9, 'register', '130774', 37, 1, '2025-12-09 11:59:56', '2025-12-09 11:54:56', '2025-12-09 11:55:26'),
-(10, 'register', '670240', 38, 1, '2025-12-09 12:02:03', '2025-12-09 11:57:03', '2025-12-09 11:57:24'),
-(19, 'register', '520654', 49, 0, '2026-01-30 15:18:30', '2026-01-30 15:13:30', '2026-01-30 15:13:30'),
-(20, 'register', '249031', 50, 1, '2026-01-30 15:38:12', '2026-01-30 15:36:46', '2026-01-30 15:38:12');
+(10, 'register', '670240', 38, 1, '2025-12-09 12:02:03', '2025-12-09 11:57:03', '2025-12-09 11:57:24');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `vouchers`
+-- Table structure for table `vouchers`
 --
 
-CREATE TABLE `vouchers` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT 0,
-  `percentage` double(5,2) NOT NULL DEFAULT 0.00,
+DROP TABLE IF EXISTS `vouchers`;
+CREATE TABLE IF NOT EXISTS `vouchers` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` tinyint(1) NOT NULL DEFAULT '0',
+  `percentage` double(5,2) NOT NULL DEFAULT '0.00',
   `max_discount` double(15,2) DEFAULT NULL,
-  `minimum_transaction` double(15,2) NOT NULL DEFAULT 0.00,
-  `quota` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `minimum_transaction` double(15,2) NOT NULL DEFAULT '0.00',
+  `quota` int UNSIGNED NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `start_date` datetime NOT NULL,
   `expired_date` datetime NOT NULL,
-  `user_created` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_created` bigint UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `vouchers_user_created_foreign` (`user_created`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `vouchers`
+-- Dumping data for table `vouchers`
 --
 
 INSERT INTO `vouchers` (`id`, `name`, `type`, `percentage`, `max_discount`, `minimum_transaction`, `quota`, `status`, `start_date`, `expired_date`, `user_created`, `created_at`, `updated_at`) VALUES
 (1, 'Voucher Diskon', 1, 10.00, 100.00, 0.00, 10, 1, '2025-04-01 00:38:00', '2025-05-01 00:38:00', 1, '2025-04-29 17:38:23', '2025-04-29 17:38:23');
 
 --
--- Indexes for dumped tables
+-- Constraints for dumped tables
 --
 
 --
--- Indeks untuk tabel `admin_priviledge`
+-- Constraints for table `delivery_trackings`
 --
-ALTER TABLE `admin_priviledge`
-  ADD PRIMARY KEY (`id`);
+-- Bersihkan data yatim supaya FK bisa ditambahkan tanpa Error #1452
+DELETE dt FROM `delivery_trackings` dt
+LEFT JOIN `transactions` t ON dt.transaction_id = t.id
+WHERE t.id IS NULL;
 
---
--- Indeks untuk tabel `banners`
---
-ALTER TABLE `banners`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `cart_products`
---
-ALTER TABLE `cart_products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `cities`
---
-ALTER TABLE `cities`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `customers`
---
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `customers_email_unique` (`email`),
-  ADD UNIQUE KEY `customers_user_id_unique` (`user_id`);
-
---
--- Indeks untuk tabel `customer_addresses`
---
-ALTER TABLE `customer_addresses`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `customer_balances`
---
-ALTER TABLE `customer_balances`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `customer_balances_transaction_id_unique` (`transaction_id`),
-  ADD UNIQUE KEY `customer_balances_customer_withdraw_id_unique` (`customer_withdraw_id`);
-
---
--- Indeks untuk tabel `customer_withdraws`
---
-ALTER TABLE `customer_withdraws`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `customer_withdraws_code_unique` (`code`);
-
---
--- Indeks untuk tabel `delivery_trackings`
---
-ALTER TABLE `delivery_trackings`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `delivery_trackings_transaction_id_foreign` (`transaction_id`);
-
---
--- Indeks untuk tabel `districts`
---
-ALTER TABLE `districts`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
-
---
--- Indeks untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `model_has_permissions`
---
-ALTER TABLE `model_has_permissions`
-  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
-  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
-
---
--- Indeks untuk tabel `model_has_roles`
---
-ALTER TABLE `model_has_roles`
-  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
-  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
-
---
--- Indeks untuk tabel `notification_admins`
---
-ALTER TABLE `notification_admins`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `notification_sellers`
---
-ALTER TABLE `notification_sellers`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `notification_users`
---
-ALTER TABLE `notification_users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `other_costs`
---
-ALTER TABLE `other_costs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `other_costs_transaction_id_foreign` (`transaction_id`);
-
---
--- Indeks untuk tabel `password_reset_tokens`
---
-ALTER TABLE `password_reset_tokens`
-  ADD PRIMARY KEY (`email`);
-
---
--- Indeks untuk tabel `permissions`
---
-ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`);
-
---
--- Indeks untuk tabel `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
-
---
--- Indeks untuk tabel `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `products_code_unique` (`code`);
-
---
--- Indeks untuk tabel `product_logs`
---
-ALTER TABLE `product_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_logs_product_id_user_id_index` (`product_id`,`user_id`);
-
---
--- Indeks untuk tabel `provinces`
---
-ALTER TABLE `provinces`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`);
-
---
--- Indeks untuk tabel `role_has_permissions`
---
-ALTER TABLE `role_has_permissions`
-  ADD PRIMARY KEY (`permission_id`,`role_id`),
-  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
-
---
--- Indeks untuk tabel `sellers`
---
-ALTER TABLE `sellers`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `sellers_email_unique` (`email`);
-
---
--- Indeks untuk tabel `seller_balances`
---
-ALTER TABLE `seller_balances`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `seller_balances_transaction_id_unique` (`transaction_id`),
-  ADD UNIQUE KEY `seller_balances_withdraw_id_unique` (`withdraw_id`);
-
---
--- Indeks untuk tabel `seller_banners`
---
-ALTER TABLE `seller_banners`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `seller_coachings`
---
-ALTER TABLE `seller_coachings`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `seller_coachings_seller_id_index` (`seller_id`);
-
---
--- Indeks untuk tabel `seller_withdraws`
---
-ALTER TABLE `seller_withdraws`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `seller_withdraws_code_unique` (`code`);
-
---
--- Indeks untuk tabel `setting_about_us`
---
-ALTER TABLE `setting_about_us`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `setting_categories`
---
-ALTER TABLE `setting_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `setting_categories_code_unique` (`code`);
-
---
--- Indeks untuk tabel `setting_category_logs`
---
-ALTER TABLE `setting_category_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `setting_category_logs_setting_category_id_user_id_index` (`setting_category_id`,`user_id`);
-
---
--- Indeks untuk tabel `setting_contact_admins`
---
-ALTER TABLE `setting_contact_admins`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `setting_costs`
---
-ALTER TABLE `setting_costs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `setting_information_bars`
---
-ALTER TABLE `setting_information_bars`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `setting_sub_categories`
---
-ALTER TABLE `setting_sub_categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `setting_types`
---
-ALTER TABLE `setting_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `setting_units`
---
-ALTER TABLE `setting_units`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `setting_units_code_unique` (`code`);
-
---
--- Indeks untuk tabel `setting_unit_logs`
---
-ALTER TABLE `setting_unit_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `setting_unit_logs_setting_unit_id_user_id_index` (`setting_unit_id`,`user_id`);
-
---
--- Indeks untuk tabel `transactions`
---
-ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `transactions_code_unique` (`code`);
-
---
--- Indeks untuk tabel `transaction_logs`
---
-ALTER TABLE `transaction_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `transaction_logs_transaction_id_foreign` (`transaction_id`);
-
---
--- Indeks untuk tabel `transaction_products`
---
-ALTER TABLE `transaction_products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `updated_at`
---
-ALTER TABLE `updated_at`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- Indeks untuk tabel `verification_codes`
---
-ALTER TABLE `verification_codes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `verification_codes_user_id_foreign` (`user_id`);
-
---
--- Indeks untuk tabel `vouchers`
---
-ALTER TABLE `vouchers`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `vouchers_user_created_foreign` (`user_created`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `admin_priviledge`
---
-ALTER TABLE `admin_priviledge`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `banners`
---
-ALTER TABLE `banners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `cart_products`
---
-ALTER TABLE `cart_products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `cities`
---
-ALTER TABLE `cities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=636;
-
---
--- AUTO_INCREMENT untuk tabel `customers`
---
-ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT untuk tabel `customer_addresses`
---
-ALTER TABLE `customer_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT untuk tabel `customer_balances`
---
-ALTER TABLE `customer_balances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `customer_withdraws`
---
-ALTER TABLE `customer_withdraws`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `delivery_trackings`
---
-ALTER TABLE `delivery_trackings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- AUTO_INCREMENT untuk tabel `districts`
---
-ALTER TABLE `districts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7127;
-
---
--- AUTO_INCREMENT untuk tabel `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
---
--- AUTO_INCREMENT untuk tabel `notification_admins`
---
-ALTER TABLE `notification_admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
-
---
--- AUTO_INCREMENT untuk tabel `notification_sellers`
---
-ALTER TABLE `notification_sellers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
-
---
--- AUTO_INCREMENT untuk tabel `notification_users`
---
-ALTER TABLE `notification_users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
---
--- AUTO_INCREMENT untuk tabel `other_costs`
---
-ALTER TABLE `other_costs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT untuk tabel `permissions`
---
-ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `products`
---
-ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
-
---
--- AUTO_INCREMENT untuk tabel `product_logs`
---
-ALTER TABLE `product_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
-
---
--- AUTO_INCREMENT untuk tabel `provinces`
---
-ALTER TABLE `provinces`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- AUTO_INCREMENT untuk tabel `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT untuk tabel `sellers`
---
-ALTER TABLE `sellers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT untuk tabel `seller_balances`
---
-ALTER TABLE `seller_balances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `seller_banners`
---
-ALTER TABLE `seller_banners`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `seller_coachings`
---
-ALTER TABLE `seller_coachings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `seller_withdraws`
---
-ALTER TABLE `seller_withdraws`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `setting_about_us`
---
-ALTER TABLE `setting_about_us`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `setting_categories`
---
-ALTER TABLE `setting_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT untuk tabel `setting_category_logs`
---
-ALTER TABLE `setting_category_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
---
--- AUTO_INCREMENT untuk tabel `setting_contact_admins`
---
-ALTER TABLE `setting_contact_admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `setting_costs`
---
-ALTER TABLE `setting_costs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `setting_information_bars`
---
-ALTER TABLE `setting_information_bars`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `setting_sub_categories`
---
-ALTER TABLE `setting_sub_categories`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `setting_types`
---
-ALTER TABLE `setting_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `setting_units`
---
-ALTER TABLE `setting_units`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `setting_unit_logs`
---
-ALTER TABLE `setting_unit_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `transactions`
---
-ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `transaction_logs`
---
-ALTER TABLE `transaction_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT untuk tabel `transaction_products`
---
-ALTER TABLE `transaction_products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `updated_at`
---
-ALTER TABLE `updated_at`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
-
---
--- AUTO_INCREMENT untuk tabel `verification_codes`
---
-ALTER TABLE `verification_codes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT untuk tabel `vouchers`
---
-ALTER TABLE `vouchers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `delivery_trackings`
---
 ALTER TABLE `delivery_trackings`
   ADD CONSTRAINT `delivery_trackings_transaction_id_foreign` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `model_has_permissions`
+-- Constraints for table `model_has_permissions`
 --
 ALTER TABLE `model_has_permissions`
   ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `model_has_roles`
+-- Constraints for table `model_has_roles`
 --
 ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `other_costs`
+-- Constraints for table `other_costs`
 --
+-- Pastikan tidak ada baris tanpa transaksi induk
+DELETE oc FROM `other_costs` oc
+LEFT JOIN `transactions` t ON oc.transaction_id = t.id
+WHERE t.id IS NULL;
+
 ALTER TABLE `other_costs`
   ADD CONSTRAINT `other_costs_transaction_id_foreign` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `role_has_permissions`
+-- Constraints for table `role_has_permissions`
 --
 ALTER TABLE `role_has_permissions`
   ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `seller_coachings`
+-- Constraints for table `transaction_logs`
 --
-ALTER TABLE `seller_coachings`
-  ADD CONSTRAINT `seller_coachings_seller_id_fk` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`id`) ON DELETE CASCADE;
+-- Bersihkan log yang tidak punya transaksi
+DELETE tl FROM `transaction_logs` tl
+LEFT JOIN `transactions` t ON tl.transaction_id = t.id
+WHERE t.id IS NULL;
 
---
--- Ketidakleluasaan untuk tabel `transaction_logs`
---
 ALTER TABLE `transaction_logs`
   ADD CONSTRAINT `transaction_logs_transaction_id_foreign` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `verification_codes`
+-- Constraints for table `verification_codes`
 --
 ALTER TABLE `verification_codes`
   ADD CONSTRAINT `verification_codes_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `vouchers`
+-- Constraints for table `vouchers`
 --
 ALTER TABLE `vouchers`
   ADD CONSTRAINT `vouchers_user_created_foreign` FOREIGN KEY (`user_created`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+-- Tambah role ADMIN REGISTER (Spatie roles) bila belum ada
+INSERT INTO `roles` (`name`, `guard_name`, `created_at`, `updated_at`)
+SELECT 'admin register', 'admin', NOW(), NOW()
+WHERE NOT EXISTS (
+    SELECT 1 FROM `roles` WHERE `name` = 'admin register' AND `guard_name` = 'admin'
+);
+
+INSERT INTO `roles` (`name`, `guard_name`, `created_at`, `updated_at`)
+SELECT 'admin user', 'admin', NOW(), NOW()
+WHERE NOT EXISTS (
+    SELECT 1 FROM `roles` WHERE `name` = 'admin user' AND `guard_name` = 'admin'
+);
+
+INSERT INTO `roles` (`name`, `guard_name`, `created_at`, `updated_at`)
+SELECT 'admin konsumen', 'admin', NOW(), NOW()
+WHERE NOT EXISTS (
+    SELECT 1 FROM `roles` WHERE `name` = 'admin konsumen' AND `guard_name` = 'admin'
+);
+
+-- Tambah flag binaan SKPD pada tabel sellers
+ALTER TABLE `sellers`
+  ADD COLUMN IF NOT EXISTS `binaan_skpd` TINYINT(1) NOT NULL DEFAULT 0;
+
+-- Kolom tambahan untuk penanganan komplain
+ALTER TABLE `transaction_products`
+  ADD COLUMN IF NOT EXISTS `complain_final_decision` text DEFAULT NULL,
+  ADD COLUMN IF NOT EXISTS `complain_escalated` TINYINT(1) NOT NULL DEFAULT 0;
+
+-- Kolom flag review bermasalah
+ALTER TABLE `transaction_products`
+  ADD COLUMN IF NOT EXISTS `review_flagged` TINYINT(1) NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS `review_flag_note` text DEFAULT NULL;
+
+-- Tabel catatan pembinaan pelapak (untuk SKPD)
+CREATE TABLE IF NOT EXISTS `seller_coachings` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `seller_id` bigint(20) UNSIGNED NOT NULL,
+  `type` enum('pelatihan','bantuan','pendampingan_kur','lainnya') NOT NULL DEFAULT 'pelatihan',
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `coaching_date` date DEFAULT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `created_by` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `seller_coachings_seller_id_index` (`seller_id`),
+  CONSTRAINT `seller_coachings_seller_id_fk` FOREIGN KEY (`seller_id`) REFERENCES `sellers` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

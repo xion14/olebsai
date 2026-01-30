@@ -34,6 +34,15 @@ use App\Http\Controllers\admin\OtherCostController as OtherCostAdmin;
 use App\Http\Controllers\admin\SettingContactAdminController as SettingContactAdmin;
 use App\Http\Controllers\admin\VoucherController as VoucherAdmin;
 use App\Http\Controllers\admin\SettingCostController as SettingCostAdmin;
+use App\Http\Controllers\admin\ComplaintController;
+use App\Http\Controllers\admin\RegisterDashboardController;
+use App\Http\Controllers\admin\RegisterCoachingController;
+use App\Http\Controllers\admin\UserDashboardController;
+use App\Http\Controllers\admin\ConsumerDashboardController;
+use App\Http\Controllers\admin\ConsumerComplaintController;
+use App\Http\Controllers\admin\ConsumerReviewController;
+use App\Http\Controllers\admin\ConsumerAnalysisController;
+use App\Http\Controllers\admin\MasterAdminController;
 
 use App\Http\Controllers\customer\AboutOlbesaiController;
 use App\Http\Controllers\customer\LoginController;
@@ -108,7 +117,7 @@ Route::get('/seller/register', function () {
 
 Route::get('/seller/email-verify/{user_id}', [AuthSeller::class, 'verification_email']);
 
-Route::get('/admin/dashboard', [DashboardAdmin::class, 'index']);
+Route::get('/admin/dashboard', [DashboardAdmin::class, 'index'])->name('admin.dashboard');
 Route::get('/admin/get-data-dashboard', [DashboardAdmin::class, 'getDataDashboard']);
 Route::get('/admin/get-transaction-statistics', [DashboardAdmin::class, 'getTransactionStatistics']);
 Route::get('/admin/get-chart-data-balance', [DashboardAdmin::class, 'getChartDataBalance']);
@@ -134,6 +143,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/transaction/cart', [StockAdmin::class, 'export']);
     Route::get('/category', [Category::class, 'index']);
     Route::get('/sub-category', [Category::class, 'subCategoriesByCatId']);
+
 });
 
 
@@ -175,8 +185,21 @@ Route::resource('/admin/users', UserAdmin::class)
 
 Route::get('/admin/sellers/confirmation', [SellerAdmin::class, 'confirmationSeller'])->name('admin.sellers.confirmation');
 Route::get('/admin/sellers/failed', [SellerAdmin::class, 'failedSeller'])->name('admin.sellers.failed');
+Route::get('/admin/sellers/active', [SellerAdmin::class, 'activeSellers'])->name('admin.sellers.active');
+Route::get('/admin/sellers/problematic', [SellerAdmin::class, 'problematicSellers'])->name('admin.sellers.problematic');
+Route::get('/admin/sellers/disabled', [SellerAdmin::class, 'disabledPage'])->name('admin.sellers.disabled');
+Route::get('/admin/sellers/performance', [SellerAdmin::class, 'performance'])->name('admin.sellers.performance');
+Route::get('/admin/sellers/master', [SellerAdmin::class, 'masterView'])->name('admin.sellers.master');
+Route::get('/admin/sellers/master/data', [SellerAdmin::class, 'masterData'])->name('admin.sellers.master.data');
+Route::post('/admin/sellers/{id}/force-block', [SellerAdmin::class, 'forceBlock'])->name('admin.sellers.force-block');
+Route::post('/admin/sellers/{id}/force-unblock', [SellerAdmin::class, 'forceUnblock'])->name('admin.sellers.force-unblock');
+Route::get('/admin/sellers/report/subsector', [SellerAdmin::class, 'reportSubsector'])->name('admin.sellers.report.subsector');
+Route::get('/admin/sellers/report/oap', [SellerAdmin::class, 'reportOap'])->name('admin.sellers.report.oap');
 Route::post('/admin/sellers/{id}/accept', [SellerAdmin::class, 'acceptSeller'])->name('admin.sellers.accept');
 Route::post('/admin/sellers/{id}/reject', [SellerAdmin::class, 'rejectSeller'])->name('admin.sellers.reject');
+Route::post('/admin/sellers/{id}/disable', [SellerAdmin::class, 'disable'])->name('admin.sellers.disable');
+Route::get('/admin/sellers/disabled/list', [SellerAdmin::class, 'getDisabled'])->name('admin.sellers.disabled.list');
+Route::post('/admin/sellers/{id}/enable', [SellerAdmin::class, 'enable'])->name('admin.sellers.enable');
 Route::get('/admin/get/sellers', [SellerAdmin::class, 'getSeller'])->name('admin.get.sellers');
 Route::get('/admin/get/customers', [CustomerAdmin::class, 'getCustomer'])->name('admin.get.customers');
 //reset password seller
@@ -193,6 +216,10 @@ Route::resource('/admin/sellers', SellerAdmin::class)
 // Admin Product Confirmation
 Route::post('/admin/products/{id}/approve', [ProductAdmin::class, 'approve'])->name('seller.products.approve');
 Route::post('/admin/products/{id}/reject', [ProductAdmin::class, 'reject'])->name('seller.products.reject');
+Route::post('/admin/products/{id}/disable', [ProductAdmin::class, 'disable'])->name('admin.products.disable');
+Route::post('/admin/products/{id}/enable', [ProductAdmin::class, 'enable'])->name('admin.products.enable');
+Route::get('/admin/products/disabled', [ProductAdmin::class, 'disabledPage'])->name('admin.products.disabled');
+Route::get('/admin/products/disabled/list', [ProductAdmin::class, 'disabledList'])->name('admin.products.disabled.list');
 
 Route::get('/admin/products/confirmation', [ProductAdmin::class, 'confirmation'])->name('admin.products.confirmation');
 Route::resource('/admin/products', ProductAdmin::class)
@@ -293,7 +320,8 @@ Route::get('/home-seller', [HomeAndAllProductController::class, 'homePage']);
 Route::get('/all-product-seller/{username}', [HomeAndAllProductController::class, 'allProductSeller']);
 
 
-Route::get('/admin/dashboard', [DashboardAdmin::class, 'index']);
+// Duplicate route removed (already defined above with name 'admin.dashboard')
+// Route::get('/admin/dashboard', [DashboardAdmin::class, 'index']);
 Route::get('/search-suggestions', [DashboardAdmin::class, 'index']);
 
 
@@ -501,6 +529,48 @@ Route::middleware(['auth'])->prefix('seller/transactions')->group(function () {
     });
 });
 
+
+Route::middleware(['auth'])->get('/admin/register/dashboard', [RegisterDashboardController::class, 'index'])->name('admin.register.dashboard');
+Route::middleware(['auth'])->prefix('admin/register')->group(function () {
+    Route::get('/verify', [RegisterDashboardController::class, 'verifyPage'])->name('admin.register.verify');
+    Route::get('/verify/data', [RegisterDashboardController::class, 'verifyData'])->name('admin.register.verify.data');
+    Route::post('/verify/{id}/action', [RegisterDashboardController::class, 'verifyAction'])->name('admin.register.verify.action');
+    Route::post('/verify/{id}/binaan', [RegisterDashboardController::class, 'toggleBinaan'])->name('admin.register.verify.binaan');
+    Route::get('/map', [RegisterDashboardController::class, 'mapPage'])->name('admin.register.map');
+    Route::get('/map/data', [RegisterDashboardController::class, 'mapData'])->name('admin.register.map.data');
+    Route::get('/map/export', [RegisterDashboardController::class, 'mapExport'])->name('admin.register.map.export');
+    Route::get('/coaching', [RegisterCoachingController::class, 'index'])->name('admin.register.coaching');
+    Route::get('/coaching/data', [RegisterCoachingController::class, 'data'])->name('admin.register.coaching.data');
+    Route::post('/coaching', [RegisterCoachingController::class, 'store'])->name('admin.register.coaching.store');
+});
+
+// Admin User (role 6) - minimal dashboard
+Route::middleware(['auth'])->get('/admin/user/dashboard', [UserDashboardController::class, 'index'])->name('admin.user.dashboard');
+
+// Admin Konsumen (role 7)
+Route::middleware(['auth'])->get('/admin/consumer/dashboard', [ConsumerDashboardController::class, 'index'])->name('admin.consumer.dashboard');
+Route::middleware(['auth'])->prefix('admin/consumer')->group(function () {
+    Route::get('/complaints', [ConsumerComplaintController::class, 'index'])->name('admin.consumer.complaints');
+    Route::get('/complaints/data', [ConsumerComplaintController::class, 'data'])->name('admin.consumer.complaints.data');
+    Route::post('/complaints/{id}', [ConsumerComplaintController::class, 'update'])->name('admin.consumer.complaints.update');
+    Route::get('/reviews', [ConsumerReviewController::class, 'index'])->name('admin.consumer.reviews');
+    Route::get('/reviews/data', [ConsumerReviewController::class, 'data'])->name('admin.consumer.reviews.data');
+    Route::post('/reviews/{id}/flag', [ConsumerReviewController::class, 'flag'])->name('admin.consumer.reviews.flag');
+    Route::get('/analysis', [ConsumerAnalysisController::class, 'index'])->name('admin.consumer.analysis');
+});
+
+// Admin Master (role 1) - kelola admin & role
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/master/admins', [MasterAdminController::class, 'index'])->name('admin.master.admins');
+    Route::post('/admin/master/admins/{id}', [MasterAdminController::class, 'update'])->name('admin.master.admins.update');
+    Route::post('/admin/master/menu-map', [MasterAdminController::class, 'updateMenuMap'])->name('admin.master.menu-map.update');
+});
+
+Route::middleware(['auth'])->prefix('admin/complaints')->group(function () {
+    Route::get('/master', [ComplaintController::class, 'index'])->name('admin.complaints.master');
+    Route::get('/master/data', [ComplaintController::class, 'data'])->name('admin.complaints.master.data');
+    Route::post('/master/{id}/override', [ComplaintController::class, 'override'])->name('admin.complaints.master.override');
+});
 
 Route::middleware(['auth'])->prefix('admin/transactions')->group(function () {
     Route::get('/', [TransactionAdmin::class, 'index'])->name('admin.transactions');

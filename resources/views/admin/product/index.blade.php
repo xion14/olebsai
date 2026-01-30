@@ -77,6 +77,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailModalLabel">Detail Produk</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-sm">
+          <tr><th>Kode</th><td id="det-code"></td></tr>
+          <tr><th>Nama</th><td id="det-name"></td></tr>
+          <tr><th>Seller</th><td id="det-seller"></td></tr>
+          <tr><th>Kategori</th><td id="det-category"></td></tr>
+          <tr><th>Unit</th><td id="det-unit"></td></tr>
+          <tr><th>Harga Seller</th><td id="det-seller-price"></td></tr>
+          <tr><th>Admin Cost</th><td id="det-admin-cost"></td></tr>
+          <tr><th>Harga</th><td id="det-price"></td></tr>
+          <tr><th>Stok</th><td id="det-stock"></td></tr>
+          <tr><th>Deskripsi</th><td id="det-description"></td></tr>
+          <tr><th>Status</th><td id="det-status"></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 $(document).ready(function() {
   var table = $('#productsTable').DataTable({
@@ -144,6 +172,23 @@ $(document).ready(function() {
     ]
   });
 
+  $('#productsTable').on('click', '.btn-detail', function() {
+    const row = table.row($(this).closest('tr')).data();
+    if(!row) return;
+    $('#det-code').text(row.code || '-');
+    $('#det-name').text(row.name || '-');
+    $('#det-seller').text(row.seller || '-');
+    $('#det-category').text(row.category || '-');
+    $('#det-unit').text(row.unit || '-');
+    $('#det-seller-price').text(row.seller_price ? 'Rp.'+Number(row.seller_price).toLocaleString('id-ID') : '-');
+    $('#det-admin-cost').text(row.admin_cost ? 'Rp.'+Number(row.admin_cost).toLocaleString('id-ID') : '-');
+    $('#det-price').text(row.price ? 'Rp.'+Number(row.price).toLocaleString('id-ID') : '-');
+    $('#det-stock').text(row.stock ?? '-');
+    $('#det-description').text(row.description || '-');
+    $('#det-status').html(row.status || '-');
+    $('#detailModal').modal('show');
+  });
+
   $('#productsTable').on('click', '.btn-view-images', function() {
         let images = JSON.parse($(this).attr('data-images')); 
         let carouselInner = $('#productCarousel .carousel-inner');
@@ -188,6 +233,37 @@ $(document).ready(function() {
             $('.table').DataTable().ajax.reload();
           });
         });
+      }
+    });
+  });
+
+  // Pesan WA ke seller produk
+  let waPhoneProd = '';
+  let waMessageProd = '';
+  $('#productsTable').on('click', '.btn-message', function() {
+    waPhoneProd = ($(this).data('phone') || '').replace(/[^0-9]/g, '');
+    if (waPhoneProd.startsWith('0')) {
+        waPhoneProd = '62' + waPhoneProd.slice(1);
+    } else if (!waPhoneProd.startsWith('62')) {
+        waPhoneProd = '62' + waPhoneProd;
+    }
+    Swal.fire({
+      title: 'Kirim pesan ke seller?',
+      input: 'textarea',
+      inputPlaceholder: 'Tulis pesan WhatsApp untuk seller...',
+      showCancelButton: true,
+      confirmButtonText: 'Kirim via WA',
+      cancelButtonText: 'Batal',
+      preConfirm: (msg) => {
+        if (!msg || !msg.trim()) {
+          Swal.showValidationMessage('Pesan tidak boleh kosong');
+        }
+        return msg;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const url = `https://wa.me/${waPhoneProd}?text=${encodeURIComponent(result.value)}`;
+        window.open(url, '_blank');
       }
     });
   });
@@ -276,6 +352,27 @@ $(document).ready(function() {
           $('.table').DataTable().ajax.reload(); // Reload DataTables
         }).fail(function () {
           Swal.fire("Error", "Failed to reject product. Try again!", "error");
+        });
+      }
+    });
+  });
+
+  $('#productsTable').on('click', '.btn-disable', function () {
+    const id = $(this).data('id');
+    Swal.fire({
+      title: 'Nonaktifkan produk?',
+      text: 'Produk akan dipindah ke daftar dinonaktifkan.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, nonaktifkan',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.post("{{ url('/admin/products') }}/" + id + "/disable", {_token: "{{ csrf_token() }}"}, function(data) {
+          Swal.fire({toast:true, icon: data.status === 200 ? 'success':'error', title: data.text, timer:2000, showConfirmButton:false, position:'top-end'});
+          table.ajax.reload(null, false);
+        }).fail(function() {
+          Swal.fire({toast:true, icon:'error', title:'Gagal menonaktifkan produk', timer:2000, showConfirmButton:false, position:'top-end'});
         });
       }
     });

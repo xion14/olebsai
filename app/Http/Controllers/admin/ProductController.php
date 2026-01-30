@@ -27,13 +27,13 @@ class ProductController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('seller', function ($row) {
-                    return '<span>' . ($row->seller->name ?? '-') . '</span>';
+                    return $row->seller->name ?? '-';
                 })
                 ->addColumn('category', function ($row) {
-                    return '<span>' . ($row->category->name ?? '-') . '</span>';
+                    return $row->category->name ?? '-';
                 })
                 ->addColumn('unit', function ($row) {
-                    return '<span>' . ($row->unit->name ?? '-') . '</span>';
+                    return $row->unit->name ?? '-';
                 })
                 ->addColumn('status', function ($row) {
                     $statusText = $row->status == 1 ? 'Waiting Approval' : ($row->status == 2 ? 'Approved' : 'Rejected');
@@ -68,7 +68,7 @@ class ProductController extends Controller
                         $row->image_3 ? ("/uploads/product/". $row->image_3) : null,
                         $row->image_4 ? ("/uploads/product/". $row->image_4) : null,
 
-                        
+
                     ])->filter()->values();
 
                     $approveButton = $row->status == 1 ? ' <button type="button" class="btn-approve btn btn-sm btn-success" data-id="' . $row->id . '">
@@ -80,20 +80,28 @@ class ProductController extends Controller
                             </button>' : '';
 
                     return '
-                        <form id="delete-form' . $row->id . '" action="' . route('admin.products.destroy', $row->id) . '" method="POST" style="display:inline;">
-                            ' . csrf_field() . '
-                            ' . method_field("DELETE") . '
+                        <div class="btn-group" role="group">
                             <button type="button" class="btn-view-images btn btn-sm btn-info" 
                                 data-images=\'' . htmlspecialchars($images, ENT_QUOTES, 'UTF-8') . '\'>
                                 <i class="fas fa-images"></i>
                             </button> 
-                            ' . $approveButton . '
-                            ' . $rejectButton . '
-
-                            <button type="button" class="btn-delete btn btn-sm btn-danger" data-id="' . $row->id . '">
-                               <i class="fas fa-trash"></i>
+                            <button type="button" class="btn btn-sm btn-primary btn-detail" data-id="' . $row->id . '">
+                                <i class="fas fa-eye"></i>
                             </button>
-                        </form>';
+                            <button type="button" class="btn btn-sm btn-info btn-message" data-phone="' . ($row->seller->phone ?? '') . '">
+                                <i class="fas fa-comment-dots"></i>
+                            </button>
+                            <button type="button" class="btn-disable btn btn-sm btn-secondary" data-id="' . $row->id . '">
+                               <i class="fas fa-ban"></i>
+                            </button>
+                            <form id="delete-form' . $row->id . '" action="' . route('admin.products.destroy', $row->id) . '" method="POST" style="display:inline;">
+                                ' . csrf_field() . '
+                                ' . method_field("DELETE") . '
+                                <button type="button" class="btn-delete btn btn-sm btn-danger" data-id="' . $row->id . '">
+                                   <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>';
                 })
                 ->rawColumns(['seller', 'action', 'status', 'category', 'unit'])
                 ->make(true);
@@ -188,6 +196,53 @@ class ProductController extends Controller
       
 
         return view('admin.product.confirmation');
+    }
+
+    public function disabledPage()
+    {
+        return view('admin.product.disabled');
+    }
+
+    public function disabledList(Request $request)
+    {
+        $data = Product::where('status', 0)->with(['category', 'unit', 'seller']);
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('seller', function ($row) {
+                return '<span>' . ($row->seller->name ?? '-') . '</span>';
+            })
+            ->addColumn('category', function ($row) {
+                return '<span>' . ($row->category->name ?? '-') . '</span>';
+            })
+            ->addColumn('unit', function ($row) {
+                return '<span>' . ($row->unit->name ?? '-') . '</span>';
+            })
+            ->addColumn('action', function ($row) {
+                return '<button class="btn btn-sm btn-success btn-enable" data-id="' . $row->id . '"><i class="fas fa-toggle-on"></i></button>';
+            })
+            ->rawColumns(['seller','category','unit','action'])
+            ->make(true);
+    }
+
+    public function disable($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = 0;
+        $product->save();
+        $this->LogProduct($product->id, 'Disable', json_encode($product));
+
+        return response()->json(['status' => 200, 'text' => 'Produk dinonaktifkan']);
+    }
+
+    public function enable($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = 2;
+        $product->save();
+        $this->LogProduct($product->id, 'Enable', json_encode($product));
+
+        return response()->json(['status' => 200, 'text' => 'Produk diaktifkan kembali']);
     }
 
     public function approve($id)
