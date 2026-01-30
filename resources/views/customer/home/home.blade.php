@@ -2,6 +2,7 @@
 
 @section('head')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<link rel="stylesheet" href="imgs/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script type="text/javascript">
         window.API_KEY = '{{ env('API_KEY') }}';
