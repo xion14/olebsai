@@ -5,6 +5,11 @@
     <section class="section">
         <div class="section-header">
             <h1>Kelola Admin & Role</h1>
+            <div class="section-header-breadcrumb ml-auto">
+                <a href="{{ route('admin.master.admins.create') }}" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Tambah Admin
+                </a>
+            </div>
         </div>
 
         <div class="section-body">
@@ -50,6 +55,7 @@
                 </div>
                 <div class="card-body table-responsive">
                     <form id="menuMapForm">
+                        @csrf
                         <table class="table table-sm">
                             <thead>
                                 <tr>
@@ -62,14 +68,18 @@
                                     <tr>
                                         <td><code>{{ $key }}</code></td>
                                         <td>
-                                            <select name="menu[{{ $key }}][]" class="form-control form-control-sm menu-roles" multiple>
-                                                @foreach($roles as $r)
-                                                    @php $selectedRole[$key][$r]=true; @endphp
+                                            @php
+                                                $selected = array_flip($roles ?? []);
+                                                $roleOptions = [1=>'Super Admin',2=>'Admin',5=>'Admin Register',6=>'Admin User',7=>'Admin Konsumen'];
+                                            @endphp
+                                            <div class="d-flex flex-wrap gap-2">
+                                                @foreach($roleOptions as $val=>$label)
+                                                    <label class="mr-3 mb-1" style="font-weight:400;">
+                                                        <input type="checkbox" name="menu[{{ $key }}][]" value="{{ $val }}" @checked(isset($selected[$val]))>
+                                                        {{ $label }}
+                                                    </label>
                                                 @endforeach
-                                                @foreach([1=>'Super Admin',2=>'Admin',5=>'Admin Register',6=>'Admin User',7=>'Admin Konsumen'] as $val=>$label)
-                                                    <option value="{{ $val }}" @if(isset($selectedRole[$key][$val])) selected @endif>{{ $label }}</option>
-                                                @endforeach
-                                            </select>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

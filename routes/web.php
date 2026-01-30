@@ -562,6 +562,8 @@ Route::middleware(['auth'])->prefix('admin/consumer')->group(function () {
 // Admin Master (role 1) - kelola admin & role
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/master/admins', [MasterAdminController::class, 'index'])->name('admin.master.admins');
+    Route::get('/admin/master/admins/create', [MasterAdminController::class, 'create'])->name('admin.master.admins.create');
+    Route::post('/admin/master/admins', [MasterAdminController::class, 'store'])->name('admin.master.admins.store');
     Route::post('/admin/master/admins/{id}', [MasterAdminController::class, 'update'])->name('admin.master.admins.update');
     Route::post('/admin/master/menu-map', [MasterAdminController::class, 'updateMenuMap'])->name('admin.master.menu-map.update');
 });

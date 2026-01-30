@@ -40,35 +40,67 @@ class MasterAdminController extends Controller
         return response()->json(['status'=>200,'text'=>'Role diperbarui']);
     }
 
+    public function create()
+    {
+        if (Auth::user()->role != 1) abort(403);
+        return view('admin.master.create');
+    }
+
+    public function store(Request $request)
+    {
+        if (Auth::user()->role != 1) abort(403);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'phone' => 'nullable|string',
+            'role' => 'required|integer|in:1,2,5,6,7'
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'phone' => $validated['phone'] ?? null,
+            'role' => $validated['role']
+        ]);
+
+        return response()->json(['status'=>200, 'text'=>'Admin ditambahkan', 'user'=>$user]);
+    }
+
     public function updateMenuMap(Request $request)
     {
         if (Auth::user()->role != 1) abort(403);
-
-        $data = $request->validate([
-            'menu' => 'required|array',
-            'menu.*' => 'array'
-        ]);
-
-        $menu = [];
-        foreach ($data['menu'] as $key => $roles) {
-            $menu[$key] = array_map('intval', $roles);
+        try {
+            $incomingMenu = $request->input('menu', []);
+            $existing = $this->loadMenuMap();
+            $newMap = [];
+            foreach ($existing as $key => $roles) {
+                $incoming = $incomingMenu[$key] ?? [];
+                $newMap[$key] = array_values(array_map('intval', (array)$incoming));
+            }
+            $this->saveMenuMap($newMap);
+            return response()->json(['status'=>200,'text'=>'Menu-role mapping diperbarui']);
+        } catch (\Throwable $e) {
+            \Log::error('menu_map_save_error', ['msg'=>$e->getMessage()]);
+            return response()->json(['status'=>400,'text'=>'Gagal menyimpan mapping: '.$e->getMessage()], 400);
         }
-        $this->saveMenuMap($menu);
-
-        return response()->json(['status'=>200,'text'=>'Menu-role mapping diperbarui']);
     }
 
     private function loadMenuMap()
     {
+        $default = config('menu_roles', []);
         if (Storage::exists('menu_roles.json')) {
             $json = json_decode(Storage::get('menu_roles.json'), true);
-            if (is_array($json)) return $json;
+            if (is_array($json)) {
+                return array_merge($default, $json);
+            }
         }
-        return config('menu_roles', []);
+        return $default;
     }
 
     private function saveMenuMap(array $map)
     {
-        Storage::put('menu_roles.json', json_encode($map, JSON_PRETTY_PRINT));
+        Storage::disk('local')->put('menu_roles.json', json_encode($map, JSON_PRETTY_PRINT));
     }
 }
