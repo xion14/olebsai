@@ -191,6 +191,7 @@ Route::controller(Dashboard::class)->group(function () {
     Route::get('/dashboard/balance-data-admin','getBalanceInfoAdmin')->name('api.dashboard.balance-data-admin');
     Route::get('/dashboard/admin-product-confirmation','getProductConfirmationAdmin')->name('api.dashboard.admin-product-confirmation');
     Route::get('/dashboard/admin-seller-confirmation','getSellerConfirmation')->name('api.dashboard.admin-seller-confirmation');
+    Route::get('/dashboard/seller-health','getSellerHealth')->name('api.dashboard.seller-health');
     
 });
 
@@ -205,4 +206,3 @@ Route::controller(Withdraw::class)->group(function () {
     Route::get('/withdraw', 'index')->name('api.withdraw.index');
     Route::post('/withdraw', 'store')->name('api.withdraw.store');
 });
-

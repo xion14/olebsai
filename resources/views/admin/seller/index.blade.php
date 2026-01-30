@@ -27,6 +27,7 @@
                                                 <th class="text-center">Business Number</th>
                                                 <th class="text-center">Phone</th>
                                                 <th class="text-center">Location</th>
+                                                <th class="text-center">OAP</th>
                                                 <th width="20%" class="text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -87,10 +88,37 @@
         </div>
     </div>
     {{-- Modal Reset Password End --}}
+    {{-- Modal Kirim Pesan WA --}}
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Kirim Pesan WhatsApp</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>No. Tujuan</label>
+                        <input type="text" id="wa-target" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Pesan</label>
+                        <textarea id="wa-message" class="form-control" rows="5" placeholder="Tulis pesan untuk seller"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" id="btn-send-wa"><i class="fas fa-paper-plane"></i> Kirim</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
-    <div class="modal fade" tabindex="-1" role="dialog" id="rejectModal">
+            <div class="modal fade" tabindex="-1" role="dialog" id="rejectModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -117,7 +145,7 @@
     </div>
 
     <script>
-        $(document).ready(function() {
+            $(document).ready(function() {
             $('.page-link.previous').html("<i class='fas fa-chevron-left'></i>");
 
             var table = registerDatatables({
@@ -156,6 +184,12 @@
                         data: 'location',
                         name: 'location',
                         searchable: true
+                    },
+                    {
+                        data: 'oap',
+                        name: 'oap',
+                        searchable: true,
+                        className: 'text-center'
                     },
                     {
                         data: 'action',
@@ -215,6 +249,61 @@
                     }
                 });
             });
+
+        $('#sellerTable').on('click', '.btn-disable', function() {
+            let id = $(this).data('id');
+            Swal.fire({
+                title: "Nonaktifkan Seller?",
+                text: "Seller akan dinonaktifkan.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, Nonaktifkan",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("{{ url('/admin/sellers') }}/" + id + "/disable", {_token: "{{ csrf_token() }}"}, function (data) {
+                        toasMessage(data.status === 200 ? 'success' : 'error', data.text);
+                        $('.table').DataTable().ajax.reload();
+                    }).fail(function() {
+                        toasMessage('error', 'Gagal menonaktifkan seller.');
+                    });
+                }
+            });
+        });
+
+        // Pesan WA
+        let waPhone = '';
+        $('#sellerTable').on('click', '.btn-message', function() {
+            waPhone = ($(this).data('phone') || '').replace(/[^0-9]/g, '');
+            // pastikan awalan +62
+            if (waPhone.startsWith('0')) {
+                waPhone = '62' + waPhone.slice(1);
+            } else if (!waPhone.startsWith('62')) {
+                waPhone = '62' + waPhone;
+            }
+            $('#wa-target').val(waPhone ? `+${waPhone}` : '');
+            $('#wa-message').val('');
+            $('#messageModal').modal('show');
+        });
+
+        $('#btn-send-wa').on('click', function() {
+            const msg = $('#wa-message').val().trim();
+            if (!waPhone) {
+                toasMessage('error', 'Nomor tidak valid');
+                return;
+            }
+            if (!msg) {
+                toasMessage('warning', 'Pesan masih kosong');
+                return;
+            }
+            const url = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+            $('#messageModal').modal('hide');
+        });
+
+        
 
             $('#showPassword').on('click', function() {
                 $('#reset-password-seller').attr('type', 'text');
