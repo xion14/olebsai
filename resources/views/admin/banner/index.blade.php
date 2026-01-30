@@ -16,7 +16,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <button class="btn btn-primary d-none" id="create_btn"><i class="fas fa-plus"></i> Create</button>
+                            <button class="btn btn-primary" id="create_btn"><i class="fas fa-plus"></i> Tambah Banner</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -107,16 +107,6 @@
                 { data: 'status', className: 'align-middle text-center' },
                 { data: 'action', className: 'align-middle text-center' }
             ],
-            drawCallback: function(settings) {
-                var api = this.api();
-                var rowCount = api.rows().count(); // Hitung jumlah baris
-
-                if (rowCount > 0) {
-                    $('#create_btn').addClass('d-none');
-                } else {
-                    $('#create_btn').removeClass('d-none'); // Tampilkan jika data kosong
-                }
-            }
         });
 
 
