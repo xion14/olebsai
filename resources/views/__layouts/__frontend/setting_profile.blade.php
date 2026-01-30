@@ -30,12 +30,14 @@
                             Menunggu Pembayaran
                         </button>
                     </li>
+                    {{--
                     <li class="list-group-item mb-2">
                         <button type="button" onclick="window.location.href='{{ url('/waiting-confirmation') }}'"
                             class="{{ request()->is('waiting-confirmation') ? 'btn btn-primary' : 'btn-setting' }} w-100 px-3 py-2 text-start rounded-0">
                             Menunggu Konfirmasi
                         </button>
                     </li>
+                    --}}
                     <li class="list-group-item mb-2">
                         <button type="button" onclick="window.location.href='{{ url('/get-saldo-user') }}'"
                             class="{{ request()->is('get-saldo-user') ? 'btn btn-primary' : 'btn-setting' }} w-100 px-3 py-2 text-start rounded-0">
